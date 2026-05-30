@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,19 +35,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BLOS.cs.gitignore",
-              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-30T20:22:22.249Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -68,7 +51,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
               "RelativeDocumentMoniker": "ScratchLLM\\Program.cs",
@@ -81,7 +64,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Matrix.cs",
               "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
               "RelativeDocumentMoniker": "Duck\\Matrix.cs",
@@ -89,8 +72,7 @@
               "RelativeToolTip": "Duck\\Matrix.cs",
               "ViewState": "AgIAAIcAAAAAAAAAAAAowJcAAABoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T19:35:40.635Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-27T19:35:40.635Z"
             }
           ]
         }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Duck")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+954f9966a4fba93b669a0d2c8063e42562c0f666")]
 [assembly: System.Reflection.AssemblyProductAttribute("Duck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Duck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
