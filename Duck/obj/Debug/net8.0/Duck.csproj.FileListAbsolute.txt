@@ -1,0 +1,11 @@
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.AssemblyInfoInputs.cache
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.AssemblyInfo.cs
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.csproj.CoreCompileInputs.cache
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Duck.deps.json
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Duck.dll
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Duck.pdb
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.dll
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\refint\Duck.dll
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.pdb
+C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\ref\Duck.dll

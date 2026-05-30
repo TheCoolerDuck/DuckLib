@@ -1,0 +1,536 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\optimization\\adamw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\optimization\\adamw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\basic\\mean.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\basic\\mean.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\basic\\linear.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\basic\\linear.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\loss\\crossentropy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\loss\\crossentropy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\simplellmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\simplellmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\singlematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\singlematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\mask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\mask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix utilities\\matrixcpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix utilities\\matrixcpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\matrixmultiplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\matrixmultiplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\concatenate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\concatenate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\matrixarray.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\matrixarray.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\doublematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\doublematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\basic\\apply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\basic\\apply.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\elementfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\elementfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\getvector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\getvector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix utilities\\backwardcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix utilities\\backwardcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\matrixfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\matrixfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\softmax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\softmax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\matrixandindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\matrixandindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\sequential.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\sequential.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\value\\double\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\value\\double\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\bsum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\bsum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\value\\single\\exp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\value\\single\\exp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\llmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\llmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\management\\cputhreadmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\management\\cputhreadmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\basic\\sum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\basic\\sum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\imodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\imodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 13,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Concatenate.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\Concatenate.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\Concatenate.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\Concatenate.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\Concatenate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAUwAcAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T19:53:15.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MatrixArray.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixArray.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\MatrixArray.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixArray.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\MatrixArray.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:46:55.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GetVector.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\GetVector.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\GetVector.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\GetVector.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\GetVector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:38:56.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DoubleMatrix.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:29:22.885Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "MatrixAndIndex.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:29:20.964Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SingleMatrix.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\SingleMatrix.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\SingleMatrix.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\SingleMatrix.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\SingleMatrix.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:29:18.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Apply.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Apply.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Basic\\Apply.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Apply.cs",
+              "RelativeToolTip": "Duck\\Modules\\Basic\\Apply.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:21:21.92Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BackwardContext.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\BackwardContext.cs",
+              "RelativeDocumentMoniker": "Duck\\Matrix Utilities\\BackwardContext.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\BackwardContext.cs",
+              "RelativeToolTip": "Duck\\Matrix Utilities\\BackwardContext.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA9wCUAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T15:18:19.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Add.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\Add.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Value\\Double\\Add.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\Add.cs",
+              "RelativeToolTip": "Duck\\Functions\\Value\\Double\\Add.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T21:11:20.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ElementFunction.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\ElementFunction.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\ElementFunction.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\ElementFunction.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\ElementFunction.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T21:11:07.521Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AdamW.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Optimization\\AdamW.cs",
+              "RelativeDocumentMoniker": "Duck\\Optimization\\AdamW.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Optimization\\AdamW.cs",
+              "RelativeToolTip": "Duck\\Optimization\\AdamW.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowC0AAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T20:28:58.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "BSum.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\BSum.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\BSum.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\BSum.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\BSum.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAqwFEAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T19:05:38.332Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Exp.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Single\\Exp.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Value\\Single\\Exp.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Single\\Exp.cs",
+              "RelativeToolTip": "Duck\\Functions\\Value\\Single\\Exp.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T19:04:40.998Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LLMModel.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\LLMModel.cs",
+              "RelativeDocumentMoniker": "ScratchLLM\\LLMModel.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\LLMModel.cs",
+              "RelativeToolTip": "ScratchLLM\\LLMModel.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAIA5wF4AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T19:01:54.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Mask.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\Mask.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\Mask.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\Mask.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\Mask.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAqwEcAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T18:48:06.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SimpleLLMModel.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\SimpleLLMModel.cs",
+              "RelativeDocumentMoniker": "ScratchLLM\\SimpleLLMModel.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\SimpleLLMModel.cs",
+              "RelativeToolTip": "ScratchLLM\\SimpleLLMModel.cs",
+              "ViewState": "AgIAAEEAAAAAy8zMzEwewGAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T17:53:11.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "SoftMax.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\SoftMax.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\SoftMax.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\SoftMax.cs",
+              "RelativeToolTip": "Duck\\Modules\\Advanced\\SoftMax.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T20:03:25.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CrossEntropy.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "RelativeToolTip": "Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "ViewState": "AgIAABMAAAAA+/////8fwCsAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T20:00:04.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MatrixCPU.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\MatrixCPU.cs",
+              "RelativeDocumentMoniker": "Duck\\Matrix Utilities\\MatrixCPU.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\MatrixCPU.cs",
+              "RelativeToolTip": "Duck\\Matrix Utilities\\MatrixCPU.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAIwCIAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T19:48:09.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
+              "RelativeDocumentMoniker": "ScratchLLM\\Program.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
+              "RelativeToolTip": "ScratchLLM\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAEMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T19:43:53.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BLOS.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs",
+              "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T19:40:19.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Sequential.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\Sequential.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\Sequential.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\Sequential.cs",
+              "RelativeToolTip": "Duck\\Modules\\Advanced\\Sequential.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAQwC0AAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T21:07:27.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Linear.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Linear.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Basic\\Linear.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Linear.cs",
+              "RelativeToolTip": "Duck\\Modules\\Basic\\Linear.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T21:02:56.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Sum.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Sum.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Basic\\Sum.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Sum.cs",
+              "RelativeToolTip": "Duck\\Modules\\Basic\\Sum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T21:02:38.636Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Mean.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Mean.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Basic\\Mean.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Basic\\Mean.cs",
+              "RelativeToolTip": "Duck\\Modules\\Basic\\Mean.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T21:02:28.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IModule.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\IModule.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\IModule.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\IModule.cs",
+              "RelativeToolTip": "Duck\\Modules\\IModule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T20:42:31.578Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MatrixMultiplication.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T20:41:15.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "MatrixFunction.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAvwBgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T20:41:12.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "CPUThreadManager.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Management\\CPUThreadManager.cs",
+              "RelativeDocumentMoniker": "Duck\\Management\\CPUThreadManager.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Management\\CPUThreadManager.cs",
+              "RelativeToolTip": "Duck\\Management\\CPUThreadManager.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwBMAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T19:46:55.761Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Matrix.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
+              "RelativeDocumentMoniker": "Duck\\Matrix.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
+              "RelativeToolTip": "Duck\\Matrix.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAowJcAAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T19:35:40.635Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

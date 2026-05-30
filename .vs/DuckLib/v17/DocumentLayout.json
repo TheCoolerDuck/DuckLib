@@ -1,0 +1,100 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BLOS.cs.gitignore",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
+              "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T20:22:22.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BLOS.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs",
+              "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-30T20:18:03.201Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
+              "RelativeDocumentMoniker": "ScratchLLM\\Program.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
+              "RelativeToolTip": "ScratchLLM\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-28T19:43:53.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Matrix.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
+              "RelativeDocumentMoniker": "Duck\\Matrix.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
+              "RelativeToolTip": "Duck\\Matrix.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAowJcAAABoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T19:35:40.635Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
