@@ -8,13 +8,13 @@ namespace Duck.Functions.Value.Double
 {
     public class Pow : IDoubleValueFunction
     {
-        public static double Apply(double a, double b)
+        public static float Apply(float a, float b)
         {
-            return Math.Pow(a, b);
+            return MathF.Pow(a, b);
         }
-        public static (double a, double b) ApplyDerivative(double a, double b)
+        public static (float a, float b) ApplyDerivative(float a, float b)
         {
-            return (b * Math.Pow(a, b - 1), Math.Pow(a, b) * Math.Log(a));
+            return (b * MathF.Pow(a, b - 1), MathF.Pow(a, b) * MathF.Log(a));
         }
     }
 }

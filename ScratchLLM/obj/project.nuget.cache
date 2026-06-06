@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "OQGxxgpz2Pw=",
+  "dgSpecHash": "1ho7pm0D5XM=",
   "success": true,
   "projectFilePath": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\ScratchLLM.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pjsol\\.nuget\\packages\\managedcuda-12\\12.8.60\\managedcuda-12.12.8.60.nupkg.sha512",
+    "C:\\Users\\pjsol\\.nuget\\packages\\managedcuda-nvrtc\\12.8.60\\managedcuda-nvrtc.12.8.60.nupkg.sha512"
+  ],
   "logs": []
 }

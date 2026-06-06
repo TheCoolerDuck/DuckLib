@@ -16,3 +16,8 @@ C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\obj\Debug\net8.0\refint\ScratchLL
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\obj\Debug\net8.0\ScratchLLM.pdb
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\obj\Debug\net8.0\ScratchLLM.genruntimeconfig.cache
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\obj\Debug\net8.0\ref\ScratchLLM.dll
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\obj\Debug\net8.0\ScratchLLM.sourcelink.json
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\ManagedCuda.netCore.dll
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\NVRTC.netCore.dll
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\GPU_Matrix.h
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\MatrixMultipication.cu

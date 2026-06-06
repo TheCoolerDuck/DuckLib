@@ -10,7 +10,7 @@ namespace Duck.Modules.Basic
 {
     public class Linear(int width, int height, string name = "linear") : IModule
     {
-        private readonly Matrix weights = new(Matrix.Random(width, height, Math.Sqrt(width)), name + "-weight");
+        private readonly Matrix weights = new(Matrix.Random(width, height, MathF.Sqrt(width)), name + "-weight");
         private readonly Matrix bias = new(Matrix.Random(1, height), name + "-bias");
 
         public Matrix Forward(Matrix m)

@@ -3,20 +3,80 @@
   "WorkspaceRootPath": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\matrixmultiplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\matrixmultiplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix utilities\\matrixgpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix utilities\\matrixgpu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\gpucode\\matrixmultipication.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\gpucode\\matrixmultipication.cu||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\gpucode\\gpu_matrix.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\gpucode\\gpu_matrix.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\management\\gpumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\management\\gpumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\matrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\doublematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\doublematrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\matrixfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\matrixfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\gpucode\\gpu_matrix.h||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\gpucode\\gpu_matrix.h||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\value\\double\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\value\\double\\add.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\matrixandindexarray.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\matrixandindexarray.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\loss\\crossentropy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\loss\\crossentropy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\scratchllm\\simplellmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D55C3527-433E-46D8-B7B8-270574B4B92F}|ScratchLLM\\ScratchLLM.csproj|solutionrelative:scratchllm\\simplellmmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\value\\double\\idoublevaluefunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\value\\double\\idoublevaluefunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\basic\\getvectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\basic\\getvectors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\functions\\parameters\\matrixandindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\functions\\parameters\\matrixandindex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\duck.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\duck.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|c:\\users\\pjsol\\source\\repos\\ducklib\\duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A9F2463-A70E-4787-93DE-4DD02A041C17}|Duck\\Duck.csproj|solutionrelative:duck\\modules\\advanced\\blos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +86,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 18,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,20 +102,214 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BLOS.cs.gitignore",
-              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
-              "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs.gitignore",
+              "DocumentIndex": 7,
+              "Title": "DoubleMatrix.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\DoubleMatrix.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\DoubleMatrix.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-30T20:22:22.249Z",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T20:12:31.127Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "GPU_Matrix.h",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "RelativeDocumentMoniker": "Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "RelativeToolTip": "Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-06-05T19:39:01.755Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MatrixMultipication.cu",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixMultipication.cu",
+              "RelativeDocumentMoniker": "Duck\\Functions\\GPUCode\\MatrixMultipication.cu",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixMultipication.cu",
+              "RelativeToolTip": "Duck\\Functions\\GPUCode\\MatrixMultipication.cu",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-06-05T19:26:44.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Add.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\Add.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Value\\Double\\Add.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\Add.cs",
+              "RelativeToolTip": "Duck\\Functions\\Value\\Double\\Add.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T19:35:45.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IDoubleValueFunction.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\IDoubleValueFunction.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Value\\Double\\IDoubleValueFunction.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Value\\Double\\IDoubleValueFunction.cs",
+              "RelativeToolTip": "Duck\\Functions\\Value\\Double\\IDoubleValueFunction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-05T19:34:56.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GPU_Matrix.h",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "RelativeDocumentMoniker": "Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "RelativeToolTip": "Duck\\Functions\\GPUCode\\GPU_Matrix.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-06-05T19:25:53.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MatrixFunction.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\MatrixFunction.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAMwDIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:50:07.423Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CrossEntropy.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "RelativeDocumentMoniker": "Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "RelativeToolTip": "Duck\\Modules\\Loss\\CrossEntropy.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAD4vxkAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:14:53.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "SimpleLLMModel.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\SimpleLLMModel.cs",
+              "RelativeDocumentMoniker": "ScratchLLM\\SimpleLLMModel.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\SimpleLLMModel.cs",
+              "RelativeToolTip": "ScratchLLM\\SimpleLLMModel.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAjwCUAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:10:24.221Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "GetVectors.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\GetVectors.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\GetVectors.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\GetVectors.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\GetVectors.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAiwCsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:07:12.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "MatrixAndIndex.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\MatrixAndIndex.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:06:15.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MatrixAndIndexArray.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndexArray.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Parameters\\MatrixAndIndexArray.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Parameters\\MatrixAndIndexArray.cs",
+              "RelativeToolTip": "Duck\\Functions\\Parameters\\MatrixAndIndexArray.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-03T21:06:14.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Duck.csproj",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Duck.csproj",
+              "RelativeDocumentMoniker": "Duck\\Duck.csproj",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Duck.csproj",
+              "RelativeToolTip": "Duck\\Duck.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-02T20:23:09.373Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MatrixGPU.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\MatrixGPU.cs",
+              "RelativeDocumentMoniker": "Duck\\Matrix Utilities\\MatrixGPU.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix Utilities\\MatrixGPU.cs",
+              "RelativeToolTip": "Duck\\Matrix Utilities\\MatrixGPU.cs",
+              "ViewState": "AgIAABYAAACAmZmZmdkgwC8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T20:00:27.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GPUManager.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Management\\GPUManager.cs",
+              "RelativeDocumentMoniker": "Duck\\Management\\GPUManager.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Management\\GPUManager.cs",
+              "RelativeToolTip": "Duck\\Management\\GPUManager.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwCcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T19:57:37.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MatrixMultiplication.cs",
+              "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "RelativeDocumentMoniker": "Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "RelativeToolTip": "Duck\\Functions\\Basic\\MatrixMultiplication.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T19:38:10.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "BLOS.cs",
               "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Modules\\Advanced\\BLOS.cs",
               "RelativeDocumentMoniker": "Duck\\Modules\\Advanced\\BLOS.cs",
@@ -63,31 +317,30 @@
               "RelativeToolTip": "Duck\\Modules\\Advanced\\BLOS.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-30T20:18:03.201Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-30T20:18:03.201Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
               "RelativeDocumentMoniker": "ScratchLLM\\Program.cs",
               "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Program.cs",
               "RelativeToolTip": "ScratchLLM\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-28T19:43:53.149Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Matrix.cs",
               "DocumentMoniker": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
               "RelativeDocumentMoniker": "Duck\\Matrix.cs",
               "ToolTip": "C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Matrix.cs",
               "RelativeToolTip": "Duck\\Matrix.cs",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAowJcAAABoAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwHUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-27T19:35:40.635Z",
               "EditorCaption": ""

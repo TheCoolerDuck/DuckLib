@@ -1,6 +1,7 @@
 ﻿
 
 using Duck.CustomLLM.Library.Objects.MatrixObjects;
+using Duck.Device_Management;
 using Duck.Functions.Basic;
 using Duck.Functions.Parameters;
 using Duck.Modules.Basic;
@@ -13,8 +14,27 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 Reporter.settings.millisecondsBetweenReports = long.MaxValue;
 
+DeviceManager.defaultDevice = Device.GPU;
+
+Matrix x = new Matrix(new float[,] { { 1, 2, 3 }, { 4, 5, 6 } });
+Matrix y = new Matrix(new float[,] { { 7, 8 }, { 9, 10 }, { 11, 12 } });
+Matrix z = y << x;
+
+Matrix a = new Matrix(Matrix.Ones(100, 1)) * 5;
+Matrix b = new Matrix(Matrix.Ones(100, 1)) * 3;
+
+Matrix c = a & b & a;
+
+
+Console.WriteLine(c);
+
+Console.WriteLine(c << z);
+
+/*
+
 Tokenizer tokenizer = new("C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Data\\TokenizationData.txt");
 
+DeviceManager.defaultDevice = Device.GPU;
 
 SimpleLLMModel model = new(tokenizer);
 
@@ -33,7 +53,7 @@ Reporter.Publish();
 
 const int sampleSize = 1027;
 
-for (int i = 0; i < 1_000; i++)
+for (int i = 0; i < 10_000; i++)
 {
     int j = random.Next(data.Length - sampleSize);
 
@@ -63,6 +83,8 @@ for (int i = 0; i < 1_000; i++)
     l.ZeroGradient();
     Matrix aL = new Mean(FunctionType.Whole).Forward(l);
     Reporter.Update(new Reporter.Report("Model Optimization", "Finished"));
-    Reporter.Update(new Reporter.Report("Model Loss", aL.ToString()));
+    Reporter.Update(new Reporter.Report("Model Loss", aL.values[0, 0].ToString()));
     Reporter.Publish();
 }
+
+*/

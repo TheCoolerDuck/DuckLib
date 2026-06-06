@@ -9,7 +9,7 @@ namespace Duck.Functions.Value.Double
 {
     public interface IDoubleValueFunction
     {
-        public static abstract double Apply(double a, double b);
-        public static abstract (double a, double b) ApplyDerivative(double a, double b);
+        public static abstract float Apply(float a, float b);
+        public static abstract (float a, float b) ApplyDerivative(float a, float b);
     }
 }

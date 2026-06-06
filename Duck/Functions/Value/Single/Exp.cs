@@ -8,14 +8,14 @@ namespace Duck.Functions.Value.Single
 {
     public class Exp : ISingleValueFunction
     {
-        public static double Apply(double v)
+        public static float Apply(float v)
         {
-            return Math.Exp(v);
+            return MathF.Exp(v);
         }
 
-        public static double ApplyDerivative(double v)
+        public static float ApplyDerivative(float v)
         {
-            return Math.Exp(v);
+            return MathF.Exp(v);
         }
     }
 }

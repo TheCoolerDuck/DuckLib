@@ -51,9 +51,9 @@ namespace Duck.Functions.Basic
                     : p.a[i - 1].shape.height);
 
             MatrixCPU[] srcs = p.a.Select(m => (MatrixCPU)m.matrixBase).ToArray();
-            double[,] values = new double[nw, nh];
+            float[,] values = new float[nw, nh];
 
-            CPUThreadManager.RunTask(0, nw, 0, nh, (x, y) =>
+            CPUManager.RunTask(0, nw, 0, nh, (x, y) =>
             {
                 int idx = GetSourceIndex(x, y, offsets);
                 MatrixCPU src = srcs[idx];
@@ -83,7 +83,7 @@ namespace Duck.Functions.Basic
             MatrixCPU[] dsts = p.a.Select(m => (MatrixCPU)m.matrixBase).ToArray();
             MatrixCPU r = (MatrixCPU)p.result.matrixBase;
 
-            CPUThreadManager.RunTask(0, p.result.shape.width, 0, p.result.shape.height, (x, y) =>
+            CPUManager.RunTask(0, p.result.shape.width, 0, p.result.shape.height, (x, y) =>
             {
                 int idx = GetSourceIndex(x, y, offsets);
                 MatrixCPU dst = dsts[idx];

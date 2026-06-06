@@ -8,13 +8,13 @@ namespace Duck.Functions.Value.Single
 {
     public class Sin : ISingleValueFunction
     {
-        public static double Apply(double v)
+        public static float Apply(float v)
         {
-            return Math.Sin(v);
+            return MathF.Sin(v);
         }
-        public static double ApplyDerivative(double v)
+        public static float ApplyDerivative(float v)
         {
-            return Math.Cos(v);
+            return MathF.Cos(v);
         }
     }
 }

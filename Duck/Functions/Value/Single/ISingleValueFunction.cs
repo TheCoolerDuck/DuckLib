@@ -9,7 +9,7 @@ namespace Duck.Functions.Value.Single
 {
     public interface ISingleValueFunction
     {
-        public static abstract double Apply(double v);
-        public static abstract double ApplyDerivative(double v);
+        public static abstract float Apply(float v);
+        public static abstract float ApplyDerivative(float v);
     }
 }

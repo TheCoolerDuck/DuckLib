@@ -45,6 +45,7 @@ namespace Duck.Matrix_Utilities
         public abstract (int width, int height) GetShape();
         public abstract bool HasGradient();
         protected abstract void ZeroGradientValues();
-        internal abstract string ToString(bool transposed);
+        internal abstract float[,] GetValues();
+        internal abstract float[,] GetGradients();
     }
 }

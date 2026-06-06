@@ -37,7 +37,7 @@ namespace ScratchLLM
 
         private readonly Matrix[] parameters;
 
-        private readonly Mask maskNegInf = new(double.NegativeInfinity, MaskType.Tri);
+        private readonly Mask maskNegInf = new(float.NegativeInfinity, MaskType.Tri);
 
         private readonly Concatenate concatenate = new(FunctionType.Row);
 
@@ -57,14 +57,7 @@ namespace ScratchLLM
 
         public Matrix TokensToVectors(int[] tokens)
         {
-            Matrix[] output = new Matrix[tokens.Length];
-
-            for (int i = 0; i < tokens.Length; i++)
-            {
-                output[i] = eigenVectors[tokens[i]];
-            }
-
-            return concatenate.Apply(output);
+            return eigenVectors.getRows(tokens);
         }
 
         public Matrix Forward(Matrix m)

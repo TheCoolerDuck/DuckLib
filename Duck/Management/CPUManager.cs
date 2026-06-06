@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Duck.Management
 {
-    internal class CPUThreadManager
+    internal static class CPUManager
     {
         public const int tasksPerThread = 128;
 

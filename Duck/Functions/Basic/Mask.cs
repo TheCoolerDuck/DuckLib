@@ -14,9 +14,9 @@ namespace Duck.Functions.Basic
     {
         Tri
     }
-    public class Mask(double maskValue, MaskType maskType) : IBasicFunction<SingleMatrix>
+    public class Mask(float maskValue, MaskType maskType) : IBasicFunction<SingleMatrix>
     {
-        private readonly double maskValue = maskValue;
+        private readonly float maskValue = maskValue;
         private readonly MaskType maskType;
         public Matrix Apply(SingleMatrix p)
         {
@@ -27,11 +27,11 @@ namespace Duck.Functions.Basic
                     if (p.m.shape.width != p.m.shape.height)
                         throw new ArgumentException("Width must equal height for tri mask");
 
-                    double[,] values = new double[p.m.shape.width, p.m.shape.height];
+                    float[,] values = new float[p.m.shape.width, p.m.shape.height];
 
                     MatrixCPU m = (MatrixCPU)p.m.matrixBase;
 
-                    CPUThreadManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
+                    CPUManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
                     {
                         if (y > x)
                             values[x, y] = maskValue;
@@ -69,7 +69,7 @@ namespace Duck.Functions.Basic
                     MatrixCPU m = (MatrixCPU)p.m.matrixBase;
                     MatrixCPU r = (MatrixCPU)p.result.matrixBase;
 
-                    CPUThreadManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
+                    CPUManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
                     {
                         if (x >= y)
                             m.AddGradient(x, y, r.GetGradient(x, y, p.result.transposed), p.m.transposed);

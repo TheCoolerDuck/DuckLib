@@ -18,9 +18,9 @@ namespace Duck.Functions.Basic
 
             if (p.m.device == Device_Management.Device.CPU)
             {
-                double[,] values = new double[p.m.shape.width, p.m.shape.height];
+                float[,] values = new float[p.m.shape.width, p.m.shape.height];
 
-                CPUThreadManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
+                CPUManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
                 {
                     values[x, y] = T.Apply(((MatrixCPU)p.m.matrixBase)[x, y, p.m.transposed]);
                 });
@@ -42,15 +42,15 @@ namespace Duck.Functions.Basic
 
             if (p.m.device == Device_Management.Device.CPU)
             {
-                double[,] values = new double[p.m.shape.width, p.m.shape.height];
+                float[,] values = new float[p.m.shape.width, p.m.shape.height];
 
                 MatrixCPU m = (MatrixCPU)p.m.matrixBase;
                 MatrixCPU result = (MatrixCPU)p.result.matrixBase;
 
-                CPUThreadManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
+                CPUManager.RunTask(0, p.m.shape.width, 0, p.m.shape.height, (x, y) =>
                 {
-                    double rGrad = result.GetGradient(x, y, p.result.transposed);
-                    double mGrad = T.ApplyDerivative(m[x, y, p.m.transposed]);
+                    float rGrad = result.GetGradient(x, y, p.result.transposed);
+                    float mGrad = T.ApplyDerivative(m[x, y, p.m.transposed]);
                     m.AddGradient(x, y, mGrad * rGrad, p.m.transposed);
                 });
             }

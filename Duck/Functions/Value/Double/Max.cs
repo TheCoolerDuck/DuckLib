@@ -8,13 +8,13 @@ namespace Duck.Functions.Value.Double
 {
     public class Max : IDoubleValueFunction
     {
-        public static double Apply(double a, double b)
+        public static float Apply(float a, float b)
         {
             return Math.Max(a, b);
         }
-        public static (double a, double b) ApplyDerivative(double a, double b)
+        public static (float a, float b) ApplyDerivative(float a, float b)
         {
-            return a >= b ? (1.0, 0.0) : (0.0, 1.0);
+            return a >= b ? (1.0f, 0.0f) : (0.0f, 1.0f);
         }
     }
 }

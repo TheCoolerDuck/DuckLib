@@ -8,14 +8,14 @@ namespace Duck.Functions.Value.Single
 {
     public class Tan : ISingleValueFunction
     {
-        public static double Apply(double v)
+        public static float Apply(float v)
         {
-            return Math.Tan(v);
+            return MathF.Tan(v);
         }
-        public static double ApplyDerivative(double v)
+        public static float ApplyDerivative(float v)
         {
-            double c = Math.Cos(v);
-            return 1.0 / (c * c);
+            float c = MathF.Cos(v);
+            return 1.0f / (c * c);
         }
     }
 }

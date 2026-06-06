@@ -2,6 +2,10 @@
 using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
+using ManagedCuda;
+using ManagedCuda.BasicTypes;
+using ManagedCuda.VectorTypes;
+using System.Drawing;
 
 namespace Duck.Functions.Basic
 {
@@ -9,25 +13,23 @@ namespace Duck.Functions.Basic
     {
         public Matrix Apply(DoubleMatrix p)
         {
-            // A is (aW x aH), B is (bW x bH)
-            // For matmul: A's width must equal B's height
             if (p.a.shape.width != p.b.shape.height)
                 throw new ArgumentException($"Matrices of incorrect shape: A: {p.a.shape}, B: {p.b.shape}");
             if (p.a.device != p.b.device)
                 throw new ArgumentException("Matrices must be on the same device");
 
+            int commonAxis = p.a.shape.width;
+
             if (p.a.device == Device_Management.Device.CPU)
             {
-                // Output is (bW x aH) — width from B, height from A
-                double[,] values = new double[p.b.shape.width, p.a.shape.height];
+                float[,] values = new float[p.b.shape.width, p.a.shape.height];
                 MatrixCPU a = (MatrixCPU)p.a.matrixBase;
                 MatrixCPU b = (MatrixCPU)p.b.matrixBase;
 
-                // x iterates output width (0..bW), y iterates output height (0..aH)
-                CPUThreadManager.RunTask(0, p.b.shape.width, 0, p.a.shape.height, (x, y) =>
+                CPUManager.RunTask(0, p.b.shape.width, 0, p.a.shape.height, (x, y) =>
                 {
-                    double sum = 0;
-                    for (int i = 0; i < p.a.shape.width; i++)
+                    float sum = 0;
+                    for (int i = 0; i < commonAxis; i++)
                         sum += a[i, y, p.a.transposed] * b[x, i, p.b.transposed];
                     values[x, y] = sum;
                 });
@@ -36,7 +38,11 @@ namespace Duck.Functions.Basic
             }
             else
             {
-                throw new NotImplementedException();
+                int size = p.b.shape.width * p.a.shape.height;
+                CudaDeviceVariable<float> values = new(size);
+                p.result = new Matrix((p.b.shape.width, p.a.shape.height), values, new BackwardContext<DoubleMatrix>(this, p));
+
+                ApplyGPU(p.a.GPUValues(), p.b.GPUValues(), p.result.GPUValues());
             }
 
             return p.result;
@@ -53,36 +59,59 @@ namespace Duck.Functions.Basic
                 MatrixCPU b = (MatrixCPU)p.b.matrixBase;
                 MatrixCPU r = (MatrixCPU)p.result.matrixBase;
 
-                // dL/dA[i, y] = sum_x( dL/dR[x, y] * B[x, i] )
-                // x in 0..bW (result width), y in 0..aH (result height), i in 0..aW
                 if (a.hasGradient)
                 {
-                    CPUThreadManager.RunTask(0, p.a.shape.width, 0, p.a.shape.height, (i, y) =>
+                    CPUManager.RunTask(0, p.a.shape.width, 0, p.a.shape.height, (x, y) =>
                     {
-                        double grad = 0;
-                        for (int x = 0; x < p.b.shape.width; x++)
-                            grad += r.GetGradient(x, y, p.result.transposed) * b[x, i, p.b.transposed];
-                        a.AddGradient(i, y, grad, p.a.transposed);
+                        float grad = 0;
+                        for (int i = 0; i < p.b.shape.width; i++)
+                            grad += r.GetGradient(i, y, p.result.transposed) * b[i, x, p.b.transposed];
+                        a.AddGradient(x, y, grad, p.a.transposed);
                     });
                 }
 
-                // dL/dB[x, i] = sum_y( dL/dR[x, y] * A[i, y] )
-                // x in 0..bW (result width), i in 0..bH (= aW), y in 0..aH
                 if (b.hasGradient)
                 {
-                    CPUThreadManager.RunTask(0, p.b.shape.width, 0, p.b.shape.height, (x, i) =>
+                    CPUManager.RunTask(0, p.b.shape.width, 0, p.b.shape.height, (x, y) =>
                     {
-                        double grad = 0;
-                        for (int y = 0; y < p.a.shape.height; y++)
-                            grad += r.GetGradient(x, y, p.result.transposed) * a[i, y, p.a.transposed];
-                        b.AddGradient(x, i, grad, p.b.transposed);
+                        float grad = 0;
+                        for (int i = 0; i < p.a.shape.height; i++)
+                            grad += r.GetGradient(x, i, p.result.transposed) * a[y, i, p.a.transposed];
+                        b.AddGradient(x, y, grad, p.b.transposed);
                     });
                 }
             }
             else
             {
-                throw new NotImplementedException();
+                if (p.a.matrixBase.hasGradient)
+                {
+                    ApplyGPU(p.result.GPUGradient(), p.b.T().GPUValues(), p.a.GPUGradient());
+                }
+
+                if (p.b.matrixBase.hasGradient)
+                {
+                    ApplyGPU(p.a.T().GPUValues(), p.result.GPUGradient(), p.b.GPUGradient());
+                }
             }
+        }
+
+        private static CudaKernel? _applyKernel;
+        public static CudaKernel applyKernel => _applyKernel ??= GPUManager.Compile(File.ReadAllText("Functions\\GPUCode\\MatrixMultipication.cu"));
+
+        private static void ApplyGPU(GPUMatrixStruct a, GPUMatrixStruct b, GPUMatrixStruct c)
+        {
+            int size = b.width * a.height;
+            int commonAxis = a.width;
+
+            int blockHeight = Math.Min((GPUManager.threads + size - 1) / size, commonAxis);
+
+            applyKernel.BlockDimensions = new dim3(32, blockHeight);
+            applyKernel.GridDimensions = (32 + size - 1) / 32;
+            applyKernel.DynamicSharedMemory = (uint)(32 * blockHeight * sizeof(float));
+
+
+
+            applyKernel.Run(a, b, c);
         }
     }
 }

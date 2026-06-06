@@ -1,5 +1,7 @@
 ﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
 using Duck.Functions.Parameters;
+using Duck.Management;
+using ManagedCuda;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Duck.Functions.Basic
 
     public interface IBasicFunction<T> where T : IParameter
     {
-        public Matrix Apply(T p);
-        public void ApplyGradient(T p);
+        public abstract Matrix Apply(T p);
+        public abstract void ApplyGradient(T p);
     }
 }

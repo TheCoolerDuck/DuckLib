@@ -8,13 +8,13 @@ namespace Duck.Functions.Value.Single
 {
     public class Log : ISingleValueFunction
     {
-        public static double Apply(double v)
+        public static float Apply(float v)
         {
-            return Math.Log(v);
+            return MathF.Log(v);
         }
-        public static double ApplyDerivative(double v)
+        public static float ApplyDerivative(float v)
         {
-            return 1.0 / v;
+            return 1.0f / v;
         }
     }
 }

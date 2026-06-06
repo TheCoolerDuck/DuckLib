@@ -1,11 +1,95 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "ManagedCuda-12/12.8.60": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/ManagedCuda.netCore.dll": {
+            "related": ".deps.json;.pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/ManagedCuda.netCore.dll": {
+            "related": ".deps.json;.pdb;.xml"
+          }
+        }
+      },
+      "ManagedCuda-NVRTC/12.8.60": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/NVRTC.netCore.dll": {
+            "related": ".deps.json;.pdb"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/NVRTC.netCore.dll": {
+            "related": ".deps.json;.pdb"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ManagedCuda-12/12.8.60": {
+      "sha512": "0nVpqJ7TdKdbFfEowJP74fWXRjCLjCqg4urTMMohD5LS7gTCuy853KmTZYaq9ojFlK6iGUbC9vI1JNAucQrkcA==",
+      "type": "package",
+      "path": "managedcuda-12/12.8.60",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "doc/README.md",
+        "images/AI_128.png",
+        "lib/net48/ManagedCuda.dll",
+        "lib/net48/ManagedCuda.pdb",
+        "lib/net48/ManagedCuda.xml",
+        "lib/net6.0/ManagedCuda.netCore.deps.json",
+        "lib/net6.0/ManagedCuda.netCore.dll",
+        "lib/net6.0/ManagedCuda.netCore.pdb",
+        "lib/net6.0/ManagedCuda.netCore.xml",
+        "lib/net7.0/ManagedCuda.netCore.deps.json",
+        "lib/net7.0/ManagedCuda.netCore.dll",
+        "lib/net7.0/ManagedCuda.netCore.pdb",
+        "lib/net7.0/ManagedCuda.netCore.xml",
+        "lib/netcoreapp3.1/ManagedCuda.netCore.deps.json",
+        "lib/netcoreapp3.1/ManagedCuda.netCore.dll",
+        "lib/netcoreapp3.1/ManagedCuda.netCore.pdb",
+        "lib/netcoreapp3.1/ManagedCuda.netCore.xml",
+        "managedcuda-12.12.8.60.nupkg.sha512",
+        "managedcuda-12.nuspec"
+      ]
+    },
+    "ManagedCuda-NVRTC/12.8.60": {
+      "sha512": "0fGG9NPbVsL/yQEnXZAHteklO26ZiVzp4wNAwo6rCeJ49p68+VJMPnQOMppjUKpSMK/KKgGQ+1ON3PrHNV3PzQ==",
+      "type": "package",
+      "path": "managedcuda-nvrtc/12.8.60",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "doc/README.md",
+        "images/AI_128.png",
+        "lib/net48/NVRTC.XML",
+        "lib/net48/NVRTC.dll",
+        "lib/net48/NVRTC.pdb",
+        "lib/net6.0/NVRTC.netCore.deps.json",
+        "lib/net6.0/NVRTC.netCore.dll",
+        "lib/net6.0/NVRTC.netCore.pdb",
+        "lib/net7.0/NVRTC.netCore.deps.json",
+        "lib/net7.0/NVRTC.netCore.dll",
+        "lib/net7.0/NVRTC.netCore.pdb",
+        "lib/netcoreapp3.1/NVRTC.netCore.deps.json",
+        "lib/netcoreapp3.1/NVRTC.netCore.dll",
+        "lib/netcoreapp3.1/NVRTC.netCore.pdb",
+        "managedcuda-nvrtc.12.8.60.nupkg.sha512",
+        "managedcuda-nvrtc.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "ManagedCuda-12 >= 12.8.60",
+      "ManagedCuda-NVRTC >= 12.8.60"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\pjsol\\.nuget\\packages\\": {},
@@ -56,6 +140,16 @@
     "frameworks": {
       "net8.0": {
         "targetAlias": "net8.0",
+        "dependencies": {
+          "ManagedCuda-12": {
+            "target": "Package",
+            "version": "[12.8.60, )"
+          },
+          "ManagedCuda-NVRTC": {
+            "target": "Package",
+            "version": "[12.8.60, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

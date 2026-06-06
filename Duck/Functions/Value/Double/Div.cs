@@ -8,13 +8,13 @@ namespace Duck.Functions.Value.Double
 {
     public class Div : IDoubleValueFunction
     {
-        public static double Apply(double a, double b)
+        public static float Apply(float a, float b)
         {
             return a / b;
         }
-        public static (double a, double b) ApplyDerivative(double a, double b)
+        public static (float a, float b) ApplyDerivative(float a, float b)
         {
-            return (1.0 / b, -a / (b * b));
+            return (1.0f / b, -a / (b * b));
         }
     }
 }

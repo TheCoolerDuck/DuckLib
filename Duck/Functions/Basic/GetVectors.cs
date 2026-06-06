@@ -5,7 +5,7 @@ using Duck.Matrix_Utilities;
 
 namespace Duck.Functions.Basic
 {
-    internal class GetVector(FunctionType type) : IBasicFunction<MatrixAndIndex>
+    internal class GetVectors(FunctionType type) : IBasicFunction<MatrixAndIndexArray>
     {
         public FunctionType type = Validate(type);
 
@@ -16,7 +16,7 @@ namespace Duck.Functions.Basic
             return t;
         }
 
-        public Matrix Apply(MatrixAndIndex p)
+        public Matrix Apply(MatrixAndIndexArray p)
         {
             if (p.m.device != Device_Management.Device.CPU)
                 throw new NotImplementedException();
@@ -24,23 +24,23 @@ namespace Duck.Functions.Basic
             bool isRow = type == FunctionType.Row;
             int vectorLen = isRow ? p.m.shape.width : p.m.shape.height;
 
-            double[,] vector = new double[isRow ? vectorLen : 1, isRow ? 1 : vectorLen];
+            float[,] vector = new float[isRow ? vectorLen : p.i.Length, isRow ? p.i.Length : vectorLen];
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
 
-            CPUThreadManager.RunTask(0, vectorLen, i =>
+            CPUManager.RunTask(0, vectorLen * p.i.Length, i =>
             {
-                int srcRow = isRow ? i : p.i;
-                int srcCol = isRow ? p.i : i;
-                int dstRow = isRow ? i : 0;
-                int dstCol = isRow ? 0 : i;
+                int srcRow = isRow ? i % vectorLen : p.i[i / vectorLen];
+                int srcCol = isRow ? p.i[i / vectorLen] : i % vectorLen;
+                int dstRow = isRow ? i % vectorLen : 0;
+                int dstCol = isRow ? 0 : i % vectorLen;
                 vector[dstRow, dstCol] = m[srcRow, srcCol, p.m.transposed];
             });
 
-            p.result = new(vector, new BackwardContext<MatrixAndIndex>(this, p));
+            p.result = new(vector, new BackwardContext<MatrixAndIndexArray>(this, p));
             return p.result;
         }
 
-        public void ApplyGradient(MatrixAndIndex p)
+        public void ApplyGradient(MatrixAndIndexArray p)
         {
             if (p.result == null)
                 throw new ArgumentException("Params must have a result.");
@@ -51,12 +51,12 @@ namespace Duck.Functions.Basic
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
             MatrixCPU r = (MatrixCPU)p.result.matrixBase;
 
-            CPUThreadManager.RunTask(0, vectorLen, i =>
+            CPUManager.RunTask(0, vectorLen * p.i.Length, i =>
             {
-                int srcRow = isRow ? i : p.i;
-                int srcCol = isRow ? p.i : i;
-                int dstRow = isRow ? i : 0;
-                int dstCol = isRow ? 0 : i;
+                int srcRow = isRow ? i % vectorLen : p.i[i / vectorLen];
+                int srcCol = isRow ? p.i[i / vectorLen] : i % vectorLen;
+                int dstRow = isRow ? i % vectorLen : 0;
+                int dstCol = isRow ? 0 : i % vectorLen;
                 m.AddGradient(srcRow, srcCol, r.GetGradient(dstRow, dstCol, p.result.transposed), p.m.transposed);
             });
         }

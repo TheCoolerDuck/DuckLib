@@ -14,29 +14,29 @@ namespace Duck.Functions.Basic
             if (p.m.device != Device_Management.Device.CPU)
                 throw new NotImplementedException();
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
-            double[,] values = new double[
+            float[,] values = new float[
                 type == FunctionType.Column ? p.m.shape.width : 1,
                 type == FunctionType.Row ? p.m.shape.height : 1];
             switch (type)
             {
                 case FunctionType.Column:
-                    CPUThreadManager.RunTask(0, p.m.shape.width, row =>
+                    CPUManager.RunTask(0, p.m.shape.width, row =>
                     {
                         for (int col = 0; col < p.m.shape.height; col++)
                         {
-                            double val = m[row, col, p.m.transposed];
-                            if (!double.IsNegativeInfinity(val))
+                            float val = m[row, col, p.m.transposed];
+                            if (!float.IsNegativeInfinity(val))
                                 values[row, 0] += val;
                         }
                     });
                     break;
                 case FunctionType.Row:
-                    CPUThreadManager.RunTask(0, p.m.shape.height, col =>
+                    CPUManager.RunTask(0, p.m.shape.height, col =>
                     {
                         for (int row = 0; row < p.m.shape.width; row++)
                         {
-                            double val = m[row, col, p.m.transposed];
-                            if (!double.IsNegativeInfinity(val))
+                            float val = m[row, col, p.m.transposed];
+                            if (!float.IsNegativeInfinity(val))
                                 values[0, col] += val;
                         }
                     });
@@ -45,8 +45,8 @@ namespace Duck.Functions.Basic
                     for (int row = 0; row < p.m.shape.width; row++)
                         for (int col = 0; col < p.m.shape.height; col++)
                         {
-                            double val = m[row, col, p.m.transposed];
-                            if (!double.IsNegativeInfinity(val))
+                            float val = m[row, col, p.m.transposed];
+                            if (!float.IsNegativeInfinity(val))
                                 values[0, 0] += val;
                         }
                     break;
@@ -66,26 +66,26 @@ namespace Duck.Functions.Basic
             switch (type)
             {
                 case FunctionType.Column:
-                    CPUThreadManager.RunTask(0, p.m.shape.width, row =>
+                    CPUManager.RunTask(0, p.m.shape.width, row =>
                     {
                         for (int col = 0; col < p.m.shape.height; col++)
-                            if (!double.IsNegativeInfinity(m[row, col, p.m.transposed]))
+                            if (!float.IsNegativeInfinity(m[row, col, p.m.transposed]))
                                 m.AddGradient(row, col, r.GetGradient(row, 0, p.result.transposed), p.m.transposed);
                     });
                     break;
                 case FunctionType.Row:
-                    CPUThreadManager.RunTask(0, p.m.shape.height, col =>
+                    CPUManager.RunTask(0, p.m.shape.height, col =>
                     {
                         for (int row = 0; row < p.m.shape.width; row++)
-                            if (!double.IsNegativeInfinity(m[row, col, p.m.transposed]))
+                            if (!float.IsNegativeInfinity(m[row, col, p.m.transposed]))
                                 m.AddGradient(row, col, r.GetGradient(0, col, p.result.transposed), p.m.transposed);
                     });
                     break;
                 default:
-                    double grad = r.GetGradient(0, 0, p.result.transposed);
+                    float grad = r.GetGradient(0, 0, p.result.transposed);
                     for (int row = 0; row < p.m.shape.width; row++)
                         for (int col = 0; col < p.m.shape.height; col++)
-                            if (!double.IsNegativeInfinity(m[row, col, p.m.transposed]))
+                            if (!float.IsNegativeInfinity(m[row, col, p.m.transposed]))
                                 m.AddGradient(row, col, grad, p.m.transposed);
                     break;
             }

@@ -49,6 +49,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "ManagedCuda-12": {
+              "target": "Package",
+              "version": "[12.8.60, )"
+            },
+            "ManagedCuda-NVRTC": {
+              "target": "Package",
+              "version": "[12.8.60, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -8,11 +8,11 @@ namespace Duck.Functions.Value.Double
 {
     public class Mul : IDoubleValueFunction
     {
-        public static double Apply(double a, double b)
+        public static float Apply(float a, float b)
         {
             return a * b;
         }
-        public static (double a, double b) ApplyDerivative(double a, double b)
+        public static (float a, float b) ApplyDerivative(float a, float b)
         {
             return (b, a);
         }
