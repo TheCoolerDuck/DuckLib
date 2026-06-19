@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
 
@@ -16,7 +15,7 @@ namespace Duck.Functions.Basic
             return t;
         }
 
-        public Matrix Apply(MatrixArray p)
+        protected override Matrix ApplyCPU(MatrixArray p)
         {
             if (p.a == null || p.a.Length == 0)
                 throw new ArgumentException("Matrix array must not be empty.");
@@ -31,9 +30,6 @@ namespace Duck.Functions.Basic
                 if (p.a[i].device != p.a[0].device)
                     throw new ArgumentException($"All matrices must be on the same device (mismatch at index {i})");
             }
-
-            if (p.a[0].device != Device_Management.Device.CPU)
-                throw new NotImplementedException();
 
             // Compute output shape — sum along the concat axis, fixed on the other
             int nw = type == FunctionType.Column
@@ -50,7 +46,7 @@ namespace Duck.Functions.Basic
                     ? p.a[i - 1].shape.width
                     : p.a[i - 1].shape.height);
 
-            MatrixCPU[] srcs = p.a.Select(m => (MatrixCPU)m.matrixBase).ToArray();
+            MatrixCPU[] srcs = [.. p.a.Select(m => (MatrixCPU)m.matrixBase)];
             float[,] values = new float[nw, nh];
 
             CPUManager.RunTask(0, nw, 0, nh, (x, y) =>
@@ -62,15 +58,20 @@ namespace Duck.Functions.Basic
                 values[x, y] = src[sx, sy, p.a[idx].transposed];
             });
 
-            p.result = new Matrix(values, new BackwardContext<MatrixArray>(this, p));
-            return p.result;
+            p.result = new Matrix(values, new MatrixOptions() { Device = Device.CPU }, new BackwardContext<MatrixArray>(this, p));
+            return p.result; ;
         }
 
-        public void ApplyGradient(MatrixArray p)
+        protected override Matrix ApplyGPU(MatrixArray p)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ApplyGradientCPU(MatrixArray p)
         {
             if (p.result == null)
                 throw new ArgumentException("Params must have a result");
-            if (p.a[0].device != Device_Management.Device.CPU)
+            if (p.a[0].device != Device.CPU)
                 throw new NotImplementedException();
 
             // Precompute offsets (same logic as Apply)
@@ -80,7 +81,7 @@ namespace Duck.Functions.Basic
                     ? p.a[i - 1].shape.width
                     : p.a[i - 1].shape.height);
 
-            MatrixCPU[] dsts = p.a.Select(m => (MatrixCPU)m.matrixBase).ToArray();
+            MatrixCPU[] dsts = [.. p.a.Select(m => (MatrixCPU)m.matrixBase)];
             MatrixCPU r = (MatrixCPU)p.result.matrixBase;
 
             CPUManager.RunTask(0, p.result.shape.width, 0, p.result.shape.height, (x, y) =>
@@ -91,6 +92,11 @@ namespace Duck.Functions.Basic
                 int sy = type == FunctionType.Row ? y - offsets[idx] : y;
                 dst.AddGradient(sx, sy, r.GetGradient(x, y, p.result.transposed), p.a[idx].transposed);
             });
+        }
+
+        protected override void ApplyGradientGPU(MatrixArray p)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

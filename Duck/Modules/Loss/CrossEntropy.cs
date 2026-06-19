@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Basic;
+﻿using Duck.Functions.Basic;
 using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
@@ -12,7 +11,7 @@ namespace Duck.Modules.Loss
         private readonly static SoftMax softMax = new(FunctionType.Column);
         public Matrix Apply(MatrixAndIndexArray p)
         {
-            if (p.m.device == Device_Management.Device.CPU)
+            if (p.m.device == Device.CPU)
             {
                 Matrix probs = softMax.Forward(p.m);
 

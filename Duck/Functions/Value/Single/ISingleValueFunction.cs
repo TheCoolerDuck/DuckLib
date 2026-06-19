@@ -1,4 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +11,7 @@ namespace Duck.Functions.Value.Single
     {
         public static abstract float Apply(float v);
         public static abstract float ApplyDerivative(float v);
+        internal static abstract string GetGPUApply();
+        internal static abstract string GetGPUApplyDerivative();
     }
 }

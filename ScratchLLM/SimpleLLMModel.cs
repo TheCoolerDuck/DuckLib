@@ -1,5 +1,5 @@
 ﻿
-using Duck.CustomLLM.Library.Objects.MatrixObjects;
+using Duck;
 using Duck.Functions.Basic;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
@@ -45,9 +45,9 @@ namespace ScratchLLM
         {
             eigenVectors = new Matrix(Matrix.Random(vectorDims, tokenizer.tokenCount));
 
-            keyMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), $"key-{i}"))]; 
-            queryMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), $"query-{i}"))];
-            valueMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, vectorDims, vectorDims), $"value-{i}"))];
+            keyMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), new MatrixOptions() { Name = $"key-{i}" } ))]; 
+            queryMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), new MatrixOptions() { Name = $"query-{i}" }))];
+            valueMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, vectorDims, vectorDims), new MatrixOptions() { Name = $"value-{i}" }))];
 
             forwardMLPs = [..Enumerable.Range(0, layers).Select(i => Sequential.MLP(vectorDims, forwardMLP_size, vectorDims, activation, $"forward-{i}"))];
             translationMLP = Sequential.MLP(vectorDims, translationMLP_size, tokenizer.tokenCount, activation, "translation");

@@ -1,11 +1,10 @@
-﻿
-using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Modules.Activation;
+﻿using Duck.Modules.Activation;
 using Duck.Modules.Basic;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
 using Duck.Modules.Advanced;
 using Duck.Tokenization;
+using Duck;
 
 namespace ScratchLLM
 {

@@ -1,9 +1,10 @@
 ﻿
 
-using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Device_Management;
+using Duck;
 using Duck.Functions.Basic;
 using Duck.Functions.Parameters;
+using Duck.Functions.Value.Single;
+using Duck.Management;
 using Duck.Modules.Basic;
 using Duck.Modules.Loss;
 using Duck.Optimization;
@@ -14,21 +15,23 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 Reporter.settings.millisecondsBetweenReports = long.MaxValue;
 
-DeviceManager.defaultDevice = Device.GPU;
+//DeviceManager.defaultDevice = Device.GPU;
 
-Matrix x = new Matrix(new float[,] { { 1, 2, 3 }, { 4, 5, 6 } });
-Matrix y = new Matrix(new float[,] { { 7, 8 }, { 9, 10 }, { 11, 12 } });
-Matrix z = y << x;
+Extend extend = new(FunctionType.Column);
 
-Matrix a = new Matrix(Matrix.Ones(100, 1)) * 5;
-Matrix b = new Matrix(Matrix.Ones(100, 1)) * 3;
+Matrix a = new(Matrix.Ones(2, 2));
+Matrix b = new(Matrix.Ones(2, 1));
 
-Matrix c = a & b & a;
+Matrix c = extend.Apply((b, 1));
 
+Matrix d = a + c;
+Matrix e = c / (a * 5);
 
+Console.WriteLine(a);
+Console.WriteLine(b);
 Console.WriteLine(c);
-
-Console.WriteLine(c << z);
+Console.WriteLine(d);
+Console.WriteLine(e);
 
 /*
 

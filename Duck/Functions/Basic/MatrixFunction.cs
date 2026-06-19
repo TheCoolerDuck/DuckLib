@@ -1,202 +1,139 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 using Duck.Functions.Value.Double;
+using Duck.Functions.Value.Single;
 using Duck.Management;
 using Duck.Matrix_Utilities;
 using ManagedCuda;
+using ManagedCuda.VectorTypes;
 using System;
+using System.Drawing;
+using System.Text;
 
 namespace Duck.Functions.Basic
 {
     internal class MatrixFunction<T> : IBasicFunction<DoubleMatrix> where T : IDoubleValueFunction
     {
-        public Matrix Apply(DoubleMatrix p)
+        protected override Matrix ApplyCPU(DoubleMatrix p)
         {
-            if (p.a.device != p.b.device)
-                throw new ArgumentException("Matrices must be on the same device");
+            if (p.a.shape != p.b.shape)
+                throw new ArgumentException($"Matrices must be of same shape {p.a} {p.b}");
 
-            bool sameSize = p.a.shape == p.b.shape;
-            bool hasScalar = p.a.IsScalar() || p.b.IsScalar();
-            bool isRowVector = p.a.shape.width == p.b.shape.width
-                               && (p.a.IsRowVector() || p.b.IsRowVector());
-            bool isColVector = p.a.shape.height == p.b.shape.height
-                               && (p.a.IsColVector() || p.b.IsColVector());
+            MatrixCPU aCPU = (MatrixCPU)p.a.matrixBase;
+            MatrixCPU bCPU = (MatrixCPU)p.b.matrixBase;
 
-            if (!(sameSize || hasScalar || isRowVector || isColVector))
-                throw new ArgumentException(
-                    $"Matrices of incompatible shape: A: {p.a.shape}, B: {p.b.shape}");
+            float[,] values = new float[p.a.shape.width, p.a.shape.height];
 
-            int outWidth = Math.Max(p.a.shape.width, p.b.shape.width);
-            int outHeight = Math.Max(p.a.shape.height, p.b.shape.height);
-
-            if (p.a.device == Device_Management.Device.CPU)
+            CPUManager.RunTask(0, p.a.shape.width, 0, p.a.shape.height, (x, y) =>
             {
-                float[,] values = new float[outWidth, outHeight];
+                values[x, y] = T.Apply(aCPU[x, y, p.a.transposed], bCPU[x, y, p.b.transposed]);
+            });
 
-                CPUManager.RunTask(0, outWidth, 0, outHeight, (x, y) =>
-                {
-                    var (ax, ay, bx, by) = GetBroadcastCoords(p.a, p.b, x, y);
-                    float aVal = ((MatrixCPU)p.a.matrixBase)[ax, ay, p.a.transposed];
-                    float bVal = ((MatrixCPU)p.b.matrixBase)[bx, by, p.b.transposed];
-                    values[x, y] = T.Apply(aVal, bVal);
-                });
-
-                p.result = new Matrix(
-                    values,
-                    new BackwardContext<DoubleMatrix>(this, p),
-                    Device_Management.Device.CPU);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            p.result = new Matrix(values, new MatrixOptions() { Device = Device.CPU }, new BackwardContext<DoubleMatrix>(this, p));
 
             return p.result;
         }
 
-        public void ApplyGradient(DoubleMatrix p)
+        protected override void ApplyGradientCPU(DoubleMatrix p)
         {
-            if (p.result == null)
-                throw new ArgumentException("Params must have a result");
+            MatrixCPU aCPU = (MatrixCPU)p.a.matrixBase;
+            MatrixCPU bCPU = (MatrixCPU)p.b.matrixBase;
+            MatrixCPU result = (MatrixCPU)p.result!.matrixBase;
 
-            if (p.a.device == Device_Management.Device.CPU)
+            CPUManager.RunTask(0, p.result.shape.width, 0, p.result.shape.height, (x, y) =>
             {
-                MatrixCPU a = (MatrixCPU)p.a.matrixBase;
-                MatrixCPU b = (MatrixCPU)p.b.matrixBase;
-                MatrixCPU result = (MatrixCPU)p.result.matrixBase;
+                float aVal = aCPU[x, y, p.a.transposed];
+                float bVal = bCPU[x, y, p.b.transposed];
+                float rGrad = result.GetGradient(x, y, p.result.transposed);
 
-                // Iterate over the OUTPUT shape, not p.a's shape, to cover all grad contributions
-                int outWidth = p.result.shape.width;
-                int outHeight = p.result.shape.height;
+                (float aGrad, float bGrad) = T.ApplyDerivative(aVal, bVal);
 
-                CPUManager.RunTask(0, outWidth, 0, outHeight, (x, y) =>
-                {
-                    var (ax, ay, bx, by) = GetBroadcastCoords(p.a, p.b, x, y);
-
-                    float aVal = a[ax, ay, p.a.transposed];
-                    float bVal = b[bx, by, p.b.transposed];
-                    float rGrad = result.GetGradient(x, y, p.result.transposed);
-
-                    (float aGrad, float bGrad) = T.ApplyDerivative(aVal, bVal);
-
-                    a.AddGradient(ax, ay, aGrad * rGrad, p.a.transposed);
-                    b.AddGradient(bx, by, bGrad * rGrad, p.b.transposed);
-                });
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+                aCPU.AddGradient(x, y, aGrad * rGrad, p.a.transposed);
+                bCPU.AddGradient(x, y, bGrad * rGrad, p.b.transposed);
+            });
         }
 
-        // --- Broadcasting helpers (mirrors getMatQuards in the reference) ---
-
-        private static (int ax, int ay, int bx, int by) GetBroadcastCoords(
-            Matrix a, Matrix b, int x, int y)
+        protected override Matrix ApplyGPU(DoubleMatrix p)
         {
-            int ax = a.IsScalar() || a.IsColVector() ? 0 : x;
-            int ay = a.IsScalar() || a.IsRowVector() ? 0 : y;
-            int bx = b.IsScalar() || b.IsColVector() ? 0 : x;
-            int by = b.IsScalar() || b.IsRowVector() ? 0 : y;
-            return (ax, ay, bx, by);
+            if (p.a.shape != p.b.shape)
+                throw new ArgumentException($"Matrices must be of same shape {p.a} {p.b}");
+
+            CudaDeviceVariable<float> values = new(p.a.shape.width * p.a.shape.height);
+            p.result = new Matrix((p.a.shape.width, p.a.shape.height), values, new BackwardContext<DoubleMatrix>(this, p));
+
+            applyKernel.BlockDimensions = 64;
+            applyKernel.GridDimensions = (p.a.size + 63) / 64;
+
+            applyKernel.Run(p.a.GPUValues(), p.b.GPUValues(), p.result.GPUValues(), GPUManager.StableHash(typeof(T).Name));
+
+            return p.result;
+        }
+
+        protected override void ApplyGradientGPU(DoubleMatrix p)
+        {
+            gradientKernel.BlockDimensions = 64;
+            gradientKernel.GridDimensions = (p.a.size + 63) / 64;
+
+            gradientKernel.Run(p.a.GPUValues(), p.b.GPUValues(), p.a.GPUGradient(), p.b.GPUGradient(), p.result!.GPUGradient(), GPUManager.StableHash(typeof(T).Name));
+        }
+
+        static MatrixFunction()
+        {
+            MakeFunctionImports();
         }
 
         private static CudaKernel? _applyKernel;
+        public static CudaKernel applyKernel => _applyKernel ??= GPUManager.Compile(File.ReadAllText("Functions\\GPUCode\\MatrixFunction.cu"));
+
         private static CudaKernel? _gradientKernel;
-        public static CudaKernel applyKernel => _applyKernel ??= GPUManager.Compile(applyCode);
-        public static CudaKernel gradientKernel => _gradientKernel ??= GPUManager.Compile(gradientCode);
+        public static CudaKernel gradientKernel => _gradientKernel ??= GPUManager.Compile(File.ReadAllText("Functions\\GPUCode\\ElementFunctionGradient.cu"));
+        private static void MakeFunctionImports()
+        {
+            List<Type> types = [.. GPUManager.GetAllTypesThatImplementInterface(typeof(IDoubleValueFunction))];
+
+            StringBuilder forward = new();
+            StringBuilder backward = new();
 
 
-        private const string applyCode = $@"
-            __device__ float getVal(float* m, int row, int col, int numRows, int numCols, bool transposed)
-            {{
-                if (transposed)
-                    return m[row * numCols + col];
-                else
-                    return m[col * numRows + row];
-            }}
-            extern ""C"" __global__ void Main(float* a, float* b, float* c,
-                                                bool aT, bool bT,
-                                                int w, int l, int h)
-            {{
-                extern __shared__ float threadSums[];
 
-                int pID = blockIdx.x * blockDim.x + threadIdx.x;
-                int ID  = threadIdx.x * blockDim.y + threadIdx.y; 
-                int x   = pID / l;
-                int y   = pID % l;
-                int i   = threadIdx.y;
-                int itemsPerThread = (h + blockDim.y - 1) / blockDim.y;
-                if (pID < w * l)
-                {{
+            forward.AppendLine(@"
+__device__ float apply(float x, float y, int ID)
+{
+    switch(ID)
+    {");
 
-                    threadSums[ID] = 0.0;
-                    int s = i * itemsPerThread;
-                    for (int j = 0; j < itemsPerThread; j++)
-                    {{
-                        int k = j + s;
-                        if (k < h)
-                        {{
-                            float aV = getVal(a, k, y, l, h, aT); 
-                            float bV = getVal(b, x, k, w, l, bT);
-                            threadSums[ID] += aV * bV;
-                        }}
-                    }}
-                }}
-                for (int stride = blockDim.y / 2 + 1; stride > 0; stride /= 2)
-                {{
-                    __syncthreads();
-                    if (i < stride && pID < w * l && i + stride < l)
-                        threadSums[ID] += threadSums[ID + stride];
-                }}
-                if (i == 0 && pID < w * l)
-                    c[y * w + x] = threadSums[ID];
-            }}";
+            backward.AppendLine(@"
+__device__ float2 apply(float x, float y, int ID)
+{
+    switch(ID)
+    {");
 
-        private const string gradientCode = $@"
-            __device__ float getVal(float* m, int row, int col, int numRows, int numCols, bool transposed)
-            {{
-                if (transposed)
-                    return m[row * numCols + col];
-                else
-                    return m[col * numRows + row];
-            }}
-            extern ""C"" __global__ void Main(float* outGrad, float* o, float* inGrad, //swap a and be for b's gradient
-                                                bool thisT, bool otherT, bool rT, //rT is restult transposed and is true for b's gradient
-                                                int w, int l, int h)
-            {{
-                extern __shared__ float threadSums[];
 
-                int pID = blockIdx.x * blockDim.x + threadIdx.x;
-                int ID  = threadIdx.x * blockDim.y + threadIdx.y; 
-                int x   = pID / l;
-                int y   = pID % l;
-                int i   = threadIdx.y;
-                int itemsPerThread = (h + blockDim.y - 1) / blockDim.y;
-                if (pID < w * l)
-                {{
+            foreach (Type t in types)
+            {
+                string codeF = (string)t
+                    .GetMethod("GetGPUApply")!
+                    .Invoke(null, null)!;
 
-                    threadSums[ID] = 0.0;
-                    int s = i * itemsPerThread;
-                    for (int j = 0; j < itemsPerThread; j++)
-                    {{
-                        int k = j + s;
-                        if (k < h)
-                        {{
-                            float bV    = getVal(o,      rT ? x : k, rT ? k : y, l, h, otherT); 
-                            float gradV = getVal(inGrad, rT ? y : k, rT ? k : x, w, l, false);
-                            threadSums[ID] += gradV * bV;
-                        }}
-                    }}
-                }}
-                for (int stride = blockDim.y / 2 + 1; stride > 0; stride /= 2)
-                {{
-                    __syncthreads();
-                    if (i < stride && pID < w * l && i + stride < l)
-                        threadSums[ID] += threadSums[ID + stride];
-                }}
-                if (i == 0 && pID < w * l)
-                    outGrad[thisT ? y * w + x : x * h + y] = threadSums[ID];
-            }}";
+                string codeB = (string)t
+                    .GetMethod("GetGPUApplyDerivative")!
+                    .Invoke(null, null)!;
+
+                forward.AppendLine($"        case {GPUManager.StableHash(t.Name)}: return {codeF};");
+                backward.AppendLine($"        case {GPUManager.StableHash(t.Name)}: return {codeB};");
+            }
+
+            forward.Append(@"        default: return 1.0f / 0.0f;
+    }
+}
+");
+            backward.Append(@"        default: return make_float2(1.0f / 0.0f, 1.0f / 0.0f);
+    }
+}
+");
+
+            File.WriteAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixFunctionsApply.h", forward.ToString());
+            File.WriteAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixFunctionsApplyGradient.h", backward.ToString());
+
+        }
     }
 }

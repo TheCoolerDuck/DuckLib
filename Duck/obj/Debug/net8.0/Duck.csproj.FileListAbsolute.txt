@@ -13,3 +13,10 @@ C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\Duck.pdb
 C:\Users\pjsol\source\repos\DuckLib\Duck\obj\Debug\net8.0\ref\Duck.dll
 C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\GPU_Matrix.h
 C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixMultipication.cu
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\ElementFunction.cu
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\ElementFuntionsApply.h
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunction.cu
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\ElementFunctionGradient.cu
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionGradient.cu
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApply.h
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApplyGradient.h

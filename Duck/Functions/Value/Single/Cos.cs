@@ -16,5 +16,14 @@ namespace Duck.Functions.Value.Single
         {
             return -MathF.Sin(v);
         }
+        public static string GetGPUApply()
+        {
+            return "cosf(x)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "-sinf(x)";
+        }
     }
 }

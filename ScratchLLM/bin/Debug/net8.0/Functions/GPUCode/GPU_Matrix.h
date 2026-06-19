@@ -18,7 +18,7 @@ struct Matrix
 
 	__device__ void Add(int x, int y, float value)
 	{
-		values[y * height + x] += value;
+		values[index(x, y)] += value;
 	}
 
 	__device__ int index(int x, int y)

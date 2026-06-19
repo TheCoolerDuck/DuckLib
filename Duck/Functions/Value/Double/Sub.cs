@@ -15,7 +15,16 @@ namespace Duck.Functions.Value.Double
 
         public static (float a, float b) ApplyDerivative(float a, float b)
         {
-            return (1, 1);
+            return (1, -1);
+        }
+        public static string GetGPUApply()
+        {
+            return "x - y";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "make_float2(1.0f, -1.0f)";
         }
     }
 }

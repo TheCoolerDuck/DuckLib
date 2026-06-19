@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 using Duck.Management;
 using ManagedCuda;
 using System;
@@ -17,9 +16,32 @@ namespace Duck.Functions.Basic
         Column
     }
 
-    public interface IBasicFunction<T> where T : IParameter
+    public abstract class IBasicFunction<T> where T : IParameter
     {
-        public abstract Matrix Apply(T p);
-        public abstract void ApplyGradient(T p);
+        public Matrix Apply(T p)
+        {
+            return p.GetOperationDevice() switch
+            {
+                Device.CPU => ApplyCPU(p),
+                Device.GPU => ApplyGPU(p),
+                _ => throw new ArgumentException("Unspecified device for operation"),
+            };
+        }
+        public void ApplyGradient(T p)
+        {
+            if (p.result == null)
+                throw new ArgumentException("Parameters must have a result for gradient passes");
+
+            switch (p.GetOperationDevice())
+            {
+                case Device.CPU: ApplyGradientCPU(p); break;
+                case Device.GPU: ApplyGradientGPU(p); break;
+                default: throw new ArgumentException("Unspecified device for operation");
+            };
+        }
+        protected abstract Matrix ApplyCPU(T p);
+        protected abstract void ApplyGradientCPU(T p);
+        protected abstract Matrix ApplyGPU(T p);
+        protected abstract void ApplyGradientGPU(T p);
     }
 }

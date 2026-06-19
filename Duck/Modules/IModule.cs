@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 
 namespace Duck.Modules
 {

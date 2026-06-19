@@ -17,5 +17,15 @@ namespace Duck.Functions.Value.Double
         {
             return (1, 1);
         }
+
+        public static string GetGPUApply()
+        {
+            return "x + y";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "make_float2(1.0f, 1.0f)";
+        }
     }
 }

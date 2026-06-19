@@ -17,5 +17,15 @@ namespace Duck.Functions.Value.Single
         {
             return MathF.Exp(v);
         }
+
+        public static string GetGPUApply()
+        {
+            return "expf(x)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "expf(x)";
+        }
     }
 }

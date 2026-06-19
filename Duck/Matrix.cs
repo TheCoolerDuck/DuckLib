@@ -1,371 +1,440 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Duck.Functions.Basic;
+using Duck.Functions.Value.Double;
+using Duck.Management;
+using Duck.Matrix_Utilities;
+using ManagedCuda;
+using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Duck
 {
-    using Device_Management;
-    using Duck.Functions.Basic;
-    using Duck.Functions.Value.Double;
-    using Duck.Matrix_Utilities;
-    using ManagedCuda;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Xml.Linq;
-    using ManagedCuda.NVRTC;
-
-    namespace CustomLLM.Library.Objects.MatrixObjects
+    public struct MatrixOptions
     {
-        public class Matrix
-        {
-
-            #region Innit
-            public Matrix(float[,] values) : this(values, true, null, DeviceManager.defaultDevice) { }
-            public Matrix(float[,] values, string name) : this(values, true, null, DeviceManager.defaultDevice, name) { }
-
-            public Matrix(float[,] values, bool hasGrad) : this(values, hasGrad, null, DeviceManager.defaultDevice) { }
-            public Matrix(float[,] values, bool hasGrad, string name) : this(values, hasGrad, null, DeviceManager.defaultDevice, name) { }
-
-            public Matrix(float[,] values, Device device) : this(values, true, null, device) { }
-            public Matrix(float[,] values, Device device, string name) : this(values, true, null, device, name) { }
-
-            public Matrix(float[,] values, bool hasGrad, Device device) : this(values, hasGrad, null, device) { }
-            public Matrix(float[,] values, bool hasGrad, Device device, string name) : this(values, hasGrad, null, device, name) { }
-
-            internal Matrix(float[,] values, IBackwardContext backwardContext) : this(values, true, backwardContext, DeviceManager.defaultDevice) { }
-            internal Matrix(float[,] values, IBackwardContext backwardContext, string name) : this(values, true, backwardContext, DeviceManager.defaultDevice, name) { }
-
-            internal Matrix(float[,] values, bool hasGrad, IBackwardContext backwardContext) : this(values, hasGrad, backwardContext, DeviceManager.defaultDevice) { }
-            internal Matrix(float[,] values, bool hasGrad, IBackwardContext backwardContext, string name) : this(values, hasGrad, backwardContext, DeviceManager.defaultDevice, name) { }
-
-            internal Matrix(float[,] values, IBackwardContext backwardContext, Device device) : this(values, true, backwardContext, device) { }
-            internal Matrix(float[,] values, IBackwardContext backwardContext, Device device, string name) : this(values, true, backwardContext, device, name) { }
-            internal Matrix(float[,] values, bool hasGrad, IBackwardContext? backwardContext, Device device, string name = "")
-            {
-                this.device = device;
-                if (device == Device.CPU)
-                    matrixBase = new MatrixCPU(values, hasGrad, backwardContext, name);
-                else
-                    matrixBase = new MatrixGPU(values, backwardContext, name);
-            }
-            internal Matrix((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext backwardContext)
-            {
-                matrixBase = new MatrixGPU(shape, values, backwardContext);
-            }
-            internal Matrix(Matrix m)
-            {
-                matrixBase = m.matrixBase;
-                transposed = !m.transposed;
-            }
-
-            #endregion
-            public readonly Device device;
-            internal readonly MatrixBase matrixBase;
-
-
-            #region Shape
-
-            public readonly bool transposed = false;
-            public Matrix T()
-            {
-                return new Matrix(this);
-            }
-
-            public (int width, int height) shape => GetShape();
-
-            public (int width, int height) GetShape()
-            {
-                (int width, int height) = matrixBase.shape;
-                if (transposed)
-                    return (height, width);
-                return (width, height);
-            }
-
-            public bool IsScalar()
-            {
-                return shape.Equals((1, 1));
-            }
-
-            public bool IsVector()
-            {
-                return IsRowVector() || IsColVector();
-            }
-            public bool IsRowVector()
-            {
-                return !IsScalar() && shape.height == 1;
-            }
-            public bool IsColVector()
-            {
-                return !IsScalar() && shape.width == 1;
-            }
-
-            #endregion
-
-            public float[,] values => matrixBase.GetValues();
-            public float[,] gradients => matrixBase.GetGradients();
-
-            public void Backwards() => matrixBase.Backwards();
-
-            public void ZeroGradient() => matrixBase.ZeroGradient();
-
-            internal GPUMatrixStruct GPUValues()
-            {
-                return new GPUMatrixStruct(this, ((MatrixGPU)matrixBase).values);
-            }
-            internal GPUMatrixStruct GPUGradient()
-            {
-                return new GPUMatrixStruct(this, ((MatrixGPU)matrixBase).gradient!);
-            }
-
-
-            #region ToString
-            private const int toStringMaxSize = 8;
-            public override string ToString()
-            {
-                StringBuilder sb = new();
-
-                sb.AppendLine($"Matrix {matrixBase.name}; ID: {matrixBase.ID:X}; Shape: " + (transposed ? (shape.height, shape.width) : shape));
-
-                sb.AppendLine("Values:");
-
-                float[,] values = matrixBase.GetValues();
-                AddMatrix((x, y, t) =>  t ? values[y, x] : values[x, y]);
-
-                if (matrixBase.HasGradient())
-                {
-                    sb.AppendLine("Gradient:");
-                    float[,] gradients = matrixBase.GetGradients();
-                    AddMatrix((x, y, t) => t ? gradients[y, x] : gradients[x, y]);
-                }
-
-                return sb.ToString();
-
-                void AddMatrix(Func<int, int, bool, float> func)
-                {
-                    sb.Append("[ ");
-
-                    for (int y = 0; y < (shape.height > toStringMaxSize ? toStringMaxSize : shape.height); y++)
-                        
-                    {
-                        for (int x = 0; x < (shape.width > toStringMaxSize ? toStringMaxSize : shape.width); x++)
-                        {
-                            bool xDots = x == toStringMaxSize - 2 && shape.width > toStringMaxSize;
-                            bool yDots = y == toStringMaxSize - 2 && shape.height > toStringMaxSize;
-
-                            if (xDots && yDots) sb.Append("⋱  ");
-                            else if (yDots) sb.Append("⋯  ");
-                            else if (xDots) sb.Append("   ⋮   ");
-                            else
-                            {
-                                bool xEnd = x == toStringMaxSize - 1;
-                                bool yEnd = y == toStringMaxSize - 1;
-
-                                if (xEnd && yEnd) sb.Append(Formatfloat(func(shape.width - 1, shape.height - 1, transposed)) + ", ");
-                                else if (xEnd) sb.Append(Formatfloat(func(shape.width - 1, y, transposed)) + ", ");
-                                else if (yEnd) sb.Append(Formatfloat(func(x, shape.height - 1, transposed)) + ", ");
-                                else sb.Append(Formatfloat(func(x, y, transposed)) + ", ");
-                            }
-                        }
-
-                        sb.Append("\n  ");
-                    }
-
-                    sb.Remove(sb.Length - 5, 5);
-
-                    sb.Append(" ]\n");
-                }
-
-                static string Formatfloat(float f)
-                {
-                    if (float.IsNaN(f))
-                        return " Nan ";
-
-                    if (f >= 0)
-                    {
-                        if (f == float.PositiveInfinity) return "  +∞ ";
-                        if (f >= 10_000) return "#####";
-                        if (f >= 1_000) return ((int)f).ToString();
-                        if (f >= 100) return f.ToString("F1");
-                        if (f >= 10) return f.ToString("F2");
-                        return Math.Abs(f).ToString("F3");
-                    }
-                    else
-                    {
-                        if (f == float.NegativeInfinity) return "  -∞ ";
-                        if (f <= -1_000) return "-####";
-                        if (f <= -100) return ((int)f).ToString();
-                        if (f <= -10) return f.ToString("F1");
-                        return f.ToString("F2");
-                    }
-                }
-            }
-
-            #endregion
-
-
-
-            #region Operations
-
-            #region Function Objects
-            private static readonly MatrixMultiplication matMulObj = new();
-            private static readonly MatrixFunction<Div> divObj = new();
-            private static readonly MatrixFunction<Sub> subObj = new();
-            private static readonly MatrixFunction<Add> addObj = new();
-            private static readonly MatrixFunction<Mul> mulObj = new();
-            private static readonly GetVectors getRowObj = new(FunctionType.Row);
-            private static readonly GetVectors getColObj = new(FunctionType.Column);
-            private static readonly Concatenate rowCatObj = new(FunctionType.Row);
-            private static readonly Concatenate colCatObj = new(FunctionType.Column);
-
-            #endregion
-
-
-
-            #region Functions
-            public Matrix matMul(Matrix o) { return matMulObj.Apply((this, o)); }
-            public Matrix div(Matrix o) { return divObj.Apply((this, o)); }
-            public Matrix sub(Matrix o) { return subObj.Apply((this, o)); }
-            public Matrix add(Matrix o) { return addObj.Apply((this, o)); }
-            public Matrix mul(Matrix o) { return mulObj.Apply((this, o)); }
-            public Matrix div(float o) { return divObj.Apply((this, new Matrix(new float[,] { { o } }, false, device))); }
-            public Matrix iDiv(float o) { return divObj.Apply((new Matrix(new float[,] { { o } }, false, device), this)); }
-            public Matrix sub(float o) { return subObj.Apply((this, new Matrix(new float[,] { { o } }, false, device))); }
-            public Matrix iSub(float o) { return subObj.Apply((new Matrix(new float[,] { { o } }, false, device), this)); }
-            public Matrix add(float o) { return addObj.Apply((this, new Matrix(new float[,] { { o } }, false, device))); }
-            public Matrix mul(float o) { return mulObj.Apply((this, new Matrix(new float[,] { { o } }, false, device))); }
-            public Matrix getRow(int i) { return getRowObj.Apply((this, [i])); }
-            public Matrix getCol(int i) { return getColObj.Apply((this, [i])); }
-            public Matrix getRows(int[] i) { return getRowObj.Apply((this, i)); }
-            public Matrix getCosl(int[] i) { return getColObj.Apply((this, i)); }
-            public Matrix rowConcatenate(Matrix o) { return rowCatObj.Apply(new Matrix[] { this, o }); }
-            public Matrix colConcatenate(Matrix o) { return colCatObj.Apply(new Matrix[] { this, o }); }
-
-            #endregion
-
-            #region Operators
-
-            public static Matrix operator <<(Matrix a, Matrix b) { return a.matMul(b); }
-            public static Matrix operator /(Matrix a, Matrix b) { return a.div(b); }
-            public static Matrix operator -(Matrix a, Matrix b) { return a.sub(b); }
-            public static Matrix operator +(Matrix a, Matrix b) { return a.add(b); }
-            public static Matrix operator *(Matrix a, Matrix b) { return a.mul(b); }
-            public static Matrix operator /(float a, Matrix b) { return b.iDiv(a); }
-            public static Matrix operator -(float a, Matrix b) { return b.iSub(a); }
-            public static Matrix operator +(float a, Matrix b) { return b.add(a); }
-            public static Matrix operator *(float a, Matrix b) { return b.mul(a); }
-            public static Matrix operator /(Matrix a, float b) { return a.div(b); }
-            public static Matrix operator -(Matrix a, float b) { return a.sub(b); }
-            public static Matrix operator +(Matrix a, float b) { return a.add(b); }
-            public static Matrix operator *(Matrix a, float b) { return a.mul(b); }
-            public static Matrix operator -(Matrix a) { return a.mul(-1); }
-            public Matrix this[int i, FunctionType type]
-            {
-                get
-                {
-                    if (type == FunctionType.Row)
-                        return getRow(i);
-                    if (type == FunctionType.Column)
-                        return getCol(i);
-
-                    throw new ArgumentException("FunctionType.whole is not allowed.", nameof(type));
-                }
-            }
-            public Matrix this[int i]
-            {
-                get
-                {
-                    return getRow(i);
-                }
-            }
-            public Matrix this[int i, char c]
-            {
-                get
-                {
-                    return getRow(i);
-                }
-            }
-            public Matrix this[char c, int i]
-            {
-                get
-                {
-                    return getCol(i);
-                }
-            }
-            public static Matrix operator &(Matrix a, Matrix b) { return a.rowConcatenate(b); }
-            public static Matrix operator |(Matrix a, Matrix b) { return a.colConcatenate(b); }
-            #endregion
-            #endregion
-
-
-
-            #region Generators
-            public static float[,] Random(int width, int height)
-            {
-                return Random(width, height, 1);
-            }
-
-            public static float[,] Random(int width, int height, float denominator)
-            {
-                float[,] values = new float[width, height];
-
-                Random rand = new();
-
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        values[x, y] = (float)((rand.NextDouble() - 0.5) * 2 / denominator);
-                    }
-                }
-
-                return values;
-            }
-
-            public static float[,] Zeros(int width, int height)
-            {
-                float[,] values = new float[width, height];
-
-                return values;
-            }
-
-            public static float[,] Ones(int width, int height)
-            {
-                float[,] values = new float[width, height];
-
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < height; y++)
-                    {
-                        values[x, y] = 1;
-                    }
-                }
-
-                return values;
-            }
-
-            public static float[,] OneHot(int value, int categories, int width = 1)
-            {
-                float[,] values = new float[width, categories];
-
-                for (int x = 0; x < width; x++)
-                {
-                    for (int y = 0; y < categories; y++)
-                    {
-                        values[0, y] = y == value ? 1 : 0;
-                    }
-                }
-
-                return values;
-            }
-
-
-
-            #endregion
-        }
+        public MatrixOptions() { }
+        public bool HasGrad { get; set; } = true;
+        public Device Device { get; set; } = DeviceManager.defaultDevice;
+        public string Name { get; set; } = "matrix";
     }
 
+    public class Matrix : IFormattable
+    {
+        #region Fields
+
+        internal readonly MatrixBase matrixBase;
+        public readonly bool transposed = false;
+
+        public Device device => matrixBase is MatrixCPU ? Device.CPU : Device.GPU;
+
+        #endregion
+
+        #region Initialization
+
+        public Matrix(float[,] values, MatrixOptions options)
+            : this(values, options, null) { }
+
+        public Matrix(float[,] values)
+            : this(values, new MatrixOptions(), null) { }
+
+        internal Matrix(float[,] values, IBackwardContext? backwardContext)
+            : this(values, new MatrixOptions(), backwardContext) { }
+
+        internal Matrix(float[,] values, MatrixOptions options, IBackwardContext? backwardContext)
+        {
+            matrixBase =
+                options.Device == Device.CPU
+                    ? new MatrixCPU(values, options.HasGrad, backwardContext, options.Name)
+                    : new MatrixGPU(values, backwardContext, options.Name);
+        }
+
+        internal Matrix((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext ctx)
+        {
+            matrixBase = new MatrixGPU(shape, values, ctx);
+        }
+
+        public Matrix(string dataString, bool hasGrad = true)
+        {
+            string[] items = dataString.Split(':');
+
+            string name = items[0];
+
+            string[] sShape = items[1].Split(",");
+            int width = int.Parse(sShape[0]);
+            int height = int.Parse(sShape[1]);
+
+            string sDevice = items[2];
+            Device device = Enum.Parse<Device>(sDevice);
+
+            string format = items[3];
+
+            string sValues = items[4];
+
+            byte[] bValues = format switch
+            {
+                "B64" => Convert.FromBase64String(sValues),
+                _ => throw new FormatException($"Unrecognized format: '{format}'")
+            };
+
+            uint[] iValues = new uint[bValues.Length / sizeof(uint)];
+            Buffer.BlockCopy(bValues, 0, iValues, 0, bValues.Length);
+
+            float[] fValues = [.. iValues.Select(i => BitConverter.UInt32BitsToSingle(i))];
+
+            float[,] values = new float[width, height];
+
+            Buffer.BlockCopy(fValues, 0, values, 0, fValues.Length * sizeof(float));
+
+            matrixBase =
+                device == Device.CPU
+                    ? new MatrixCPU(values, hasGrad, null, name)
+                    : new MatrixGPU(values, null, name);
+        }
+
+        private Matrix(Matrix m)
+        {
+            matrixBase = m.matrixBase;
+            transposed = !m.transposed;
+        }
+
+        #endregion
+
+        #region Shape
+
+        public int size => shape.width * shape.height;
+        public (int width, int height) shape => GetShape();
+
+        public (int width, int height) GetShape()
+        {
+            var (w, h) = matrixBase.shape;
+            return transposed ? (h, w) : (w, h);
+        }
+
+        public bool IsScalar() => shape == (1, 1);
+        public bool IsVector() => IsRowVector() || IsColVector();
+        public bool IsRowVector() => !IsScalar() && shape.height == 1;
+        public bool IsColVector() => !IsScalar() && shape.width == 1;
+        public bool Is2D() => !IsVector() && !IsScalar();
+
+        public Matrix T() => new(this);
+
+        #endregion
+
+        #region Data Access
+
+        public float[,] values => matrixBase.GetValues();
+        public float[,] gradients => matrixBase.GetGradients();
+
+        public void Backwards() => matrixBase.Backwards();
+        public void ZeroGradient() => matrixBase.ZeroGradient();
+
+        internal GPUMatrixStruct GPUValues()
+            => new(this, ((MatrixGPU)matrixBase).values);
+
+        internal GPUMatrixStruct GPUGradient()
+            => new(this, ((MatrixGPU)matrixBase).gradient!);
+
+        #endregion
+
+        #region Formatting
+
+        private const int DefaultSize = 8;
+
+        public override string ToString()
+            => ToString(DefaultSize.ToString(), CultureInfo.CurrentCulture);
+
+        public string ToString(string? format, IFormatProvider? provider)
+        {
+            format ??= DefaultSize.ToString();
+
+            return format switch
+            {
+                "B64" => DataString(format),
+                _ when int.TryParse(format, out int size) => InterfaceString(size),
+                _ => throw new FormatException($"Unrecognized format: '{format}'")
+            };
+        }
+        public string InterfaceString(int resultSize)
+        {
+            StringBuilder sb = new();
+
+            sb.AppendLine(
+                $"Matrix {matrixBase.name}; ID: {matrixBase.ID:X}; Shape: {shape}"
+            );
+
+            sb.AppendLine("Values:");
+
+            float[,] values = matrixBase.GetValues();
+
+            AddMatrix((x, y) => transposed ? values[y, x] : values[x, y]);
+
+            if (matrixBase.HasGradient())
+            {
+                sb.AppendLine("Gradient:");
+
+                float[,] gradients = matrixBase.GetGradients();
+
+                AddMatrix((x, y) => transposed ? gradients[y, x] : gradients[x, y]);
+            }
+
+            void AddMatrix(Func<int, int, float> func)
+            {
+                int w = shape.width;
+                int h = shape.height;
+
+                int maxX = Math.Min(resultSize, w);
+                int maxY = Math.Min(resultSize, h);
+
+                sb.Append("[ ");
+
+                for (int y = 0; y < maxY; y++)
+                {
+                    if (y > 0)
+                        sb.Append("  ");
+
+                    for (int x = 0; x < maxX; x++)
+                    {
+                        bool xDots = x == resultSize - 2 && w > resultSize;
+                        bool yDots = y == resultSize - 2 && h > resultSize;
+
+                        if (xDots && yDots)
+                        {
+                            sb.Append("⋱  ");
+                        }
+                        else if (xDots)
+                        {
+                            sb.Append("⋯  ");
+                        }
+                        else if (yDots)
+                        {
+                            sb.Append("  ⋮  ");
+                        }
+                        else
+                        {
+                            sb.Append(FormatFloat(func(x, y)));
+                        }
+
+                        if (x < maxX - 1)
+                            sb.Append(", ");
+                    }
+
+                    if (y < maxY - 1)
+                        sb.AppendLine();
+                }
+
+                sb.Append(" ]\n");
+            }
+
+            return sb.ToString();
+        }
+
+        public string DataString(string format)
+        {
+            StringBuilder sb = new();
+
+            sb.Append($"{matrixBase.name}:{shape.width},{shape.height}:{device}:{format}:");
+
+            float[,] values = matrixBase.GetValues();
+
+            byte[] data = new byte[shape.width * shape.height * sizeof(uint)];
+            int offset = 0;
+
+            for (int x = 0; x < shape.width; x++)
+            {
+                for (int y = 0; y < shape.height; y++)
+                {
+                    uint bits = BitConverter.SingleToUInt32Bits(
+                        transposed ? values[y, x] : values[x, y]);
+
+                    BitConverter.GetBytes(bits)
+                        .CopyTo(data, offset);
+
+                    offset += sizeof(uint);
+                }
+            }
+
+            sb.Append(Convert.ToBase64String(data));
+
+            return sb.ToString();
+        }
+        private static string FormatFloat(float f) 
+        { 
+            if (float.IsNaN(f)) return " Nan ";
+            if (f == float.PositiveInfinity) return " +∞ ";
+            if (f == float.NegativeInfinity) return " -∞ ";
+
+            if (f >= 0) 
+            { 
+                if (f >= 10_000) return "#####"; 
+                if (f >= 1_000) return ((int)f).ToString(); 
+                if (f >= 100) return f.ToString("F1"); 
+                if (f >= 10) return f.ToString("F2"); 
+                
+                return f.ToString("F3"); 
+            } 
+            else 
+            { 
+                if (f <= -1_000) return "-####"; 
+                if (f <= -100) return ((int)f).ToString(); 
+                if (f <= -10) return f.ToString("F1"); 
+                
+                return f.ToString("F2"); 
+            } 
+        }
+
+        #endregion
+
+        #region Matrix Ops (Function Objects)
+
+        private static readonly MatrixMultiplication matMulObj = new();
+        private static readonly MatrixFunction<Div> divObj = new();
+        private static readonly MatrixFunction<Sub> subObj = new();
+        private static readonly MatrixFunction<Add> addObj = new();
+        private static readonly MatrixFunction<Mul> mulObj = new();
+        private static readonly GetVectors getRowObj = new(FunctionType.Row);
+        private static readonly GetVectors getColObj = new(FunctionType.Column);
+        private static readonly Concatenate rowCatObj = new(FunctionType.Row);
+        private static readonly Concatenate colCatObj = new(FunctionType.Column);
+
+        #endregion
+
+        #region Operations
+
+        public Matrix matMul(Matrix o) => matMulObj.Apply((this, o));
+        public Matrix div(Matrix o) => divObj.Apply(Broadcast(this, o));
+        public Matrix sub(Matrix o) => subObj.Apply(Broadcast(this, o));
+        public Matrix add(Matrix o) => addObj.Apply(Broadcast(this, o));
+        public Matrix mul(Matrix o) => mulObj.Apply(Broadcast(this, o));
+
+        public Matrix div(float o) => divObj.Apply(Broadcast(this, Scalar(o)));
+        public Matrix iDiv(float o) => divObj.Apply(Broadcast(Scalar(o), this));
+
+        public Matrix sub(float o) => subObj.Apply(Broadcast(this, Scalar(o)));
+        public Matrix iSub(float o) => subObj.Apply(Broadcast(Scalar(o), this));
+
+        public Matrix add(float o) => addObj.Apply(Broadcast(this, Scalar(o)));
+        public Matrix mul(float o) => mulObj.Apply(Broadcast(this, Scalar(o)));
+
+        private Matrix Scalar(float v)
+            => new(new float[,] { { v } },
+                   new MatrixOptions { HasGrad = false, Device = device });
+
+        public static (Matrix a, Matrix b) Broadcast(Matrix a, Matrix b)
+        {
+            bool isScalar = a.IsScalar() || b.IsScalar();
+            bool isRowVector = (a.IsRowVector() || b.IsRowVector()) && b.shape.width == a.shape.width; 
+            bool isColVector = (a.IsColVector() || b.IsColVector()) && b.shape.height == a.shape.height;
+            bool isSame = a.shape == b.shape;
+            if (!isScalar && !isRowVector && !isColVector && !isSame)
+                throw new ArgumentException(
+                    $"Matrices of incompatible shape: A: {a.shape}, B: {b.shape}");
+
+            if (isSame)
+                return (a, b);
+
+            if (a.shape.width > b.shape.width && a.shape.height > b.shape.height)
+                return (a, Extend.ApplyWhole(b, a.shape.width, a.shape.height));
+
+            if (a.shape.width > b.shape.width)
+                return (a, new Extend(FunctionType.Row).Apply((b, a.shape.width)));
+
+            if (a.shape.height > b.shape.height)
+                return (a, new Extend(FunctionType.Column).Apply((b, a.shape.height)));
+
+            if (b.shape.width > a.shape.width && b.shape.height > a.shape.height)
+                return (Extend.ApplyWhole(a, b.shape.width, b.shape.height), b);
+
+            if (b.shape.width > a.shape.width)
+                return (new Extend(FunctionType.Row).Apply((a, b.shape.width)), b);
+
+            if (b.shape.height > a.shape.height)
+                return (new Extend(FunctionType.Column).Apply((a, b.shape.height)), b);
+
+            throw new Exception("im really not sure how we got here :/");
+        }
+
+        public Matrix getRow(int i) => getRowObj.Apply((this, [i]));
+        public Matrix getCol(int i) => getColObj.Apply((this, [i]));
+        public Matrix getRows(int[] i) => getRowObj.Apply((this, i));
+        public Matrix getCols(int[] i) => getColObj.Apply((this, i));
+
+        public Matrix rowConcatenate(Matrix o) => rowCatObj.Apply(new Matrix[] { this, o });
+        public Matrix colConcatenate(Matrix o) => colCatObj.Apply(new Matrix[] { this, o });
+
+        #endregion
+
+        #region Operators
+
+        public static Matrix operator <<(Matrix a, Matrix b) => a.matMul(b);
+        public static Matrix operator /(Matrix a, Matrix b) => a.div(b);
+        public static Matrix operator -(Matrix a, Matrix b) => a.sub(b);
+        public static Matrix operator +(Matrix a, Matrix b) => a.add(b);
+        public static Matrix operator *(Matrix a, Matrix b) => a.mul(b);
+
+        public static Matrix operator /(Matrix a, float b) => a.div(b);
+        public static Matrix operator -(Matrix a, float b) => a.sub(b);
+        public static Matrix operator +(Matrix a, float b) => a.add(b);
+        public static Matrix operator *(Matrix a, float b) => a.mul(b);
+
+        public static Matrix operator /(float a, Matrix b) => b.iDiv(a);
+        public static Matrix operator -(float a, Matrix b) => b.iSub(a);
+        public static Matrix operator +(float a, Matrix b) => b.add(a);
+        public static Matrix operator *(float a, Matrix b) => b.mul(a);
+
+        public static Matrix operator -(Matrix a) => a.mul(-1);
+
+        public static Matrix operator &(Matrix a, Matrix b) => a.rowConcatenate(b);
+        public static Matrix operator |(Matrix a, Matrix b) => a.colConcatenate(b);
+
+        #endregion
+
+        #region Indexers
+
+        public Matrix this[int i] => getRow(i);
+
+        public Matrix this[int i, FunctionType type]
+            => type == FunctionType.Row ? getRow(i)
+             : type == FunctionType.Column ? getCol(i)
+             : throw new ArgumentException($"Function Type: {type} not allowed");
+
+        public Matrix this[int i, char _] => getRow(i);
+        public Matrix this[char _, int i] => getCol(i);
+
+        #endregion
+
+        #region Generators
+
+        public static float[,] Random(int w, int h, float denom = 1)
+        {
+            var r = new Random();
+            var m = new float[w, h];
+
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
+                    m[x, y] = (float)((r.NextDouble() - 0.5) * 2 / denom);
+
+            return m;
+        }
+
+        public static float[,] Zeros(int w, int h) => new float[w, h];
+
+        public static float[,] Ones(int w, int h)
+        {
+            var m = new float[w, h];
+            for (int x = 0; x < w; x++)
+                for (int y = 0; y < h; y++)
+                    m[x, y] = 1;
+            return m;
+        }
+
+        public static float[,] OneHot(int value, int categories, int width = 1)
+        {
+            var m = new float[width, categories];
+
+            for (int y = 0; y < categories; y++)
+                m[0, y] = y == value ? 1 : 0;
+
+            return m;
+        }
+
+        #endregion
+    }
 }

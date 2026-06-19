@@ -17,5 +17,15 @@ namespace Duck.Functions.Value.Single
         {
             return MathF.Pow(1 / MathF.Cosh(v), 2);
         }
+
+        public static string GetGPUApply()
+        {
+            return "tanhf(x)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "1.0f - tanhf(x) * tanhf(x)";
+        }
     }
 }

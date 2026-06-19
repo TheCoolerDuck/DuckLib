@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
 
@@ -16,11 +15,8 @@ namespace Duck.Functions.Basic
             return t;
         }
 
-        public Matrix Apply(MatrixAndIndexArray p)
+        protected override Matrix ApplyCPU(MatrixAndIndexArray p)
         {
-            if (p.m.device != Device_Management.Device.CPU)
-                throw new NotImplementedException();
-
             bool isRow = type == FunctionType.Row;
             int vectorLen = isRow ? p.m.shape.width : p.m.shape.height;
 
@@ -36,20 +32,23 @@ namespace Duck.Functions.Basic
                 vector[dstRow, dstCol] = m[srcRow, srcCol, p.m.transposed];
             });
 
-            p.result = new(vector, new BackwardContext<MatrixAndIndexArray>(this, p));
+            p.result = new(vector, new MatrixOptions() { Device = Device.CPU }, new BackwardContext<MatrixAndIndexArray>(this, p));
+
             return p.result;
         }
 
-        public void ApplyGradient(MatrixAndIndexArray p)
+        protected override Matrix ApplyGPU(MatrixAndIndexArray p)
         {
-            if (p.result == null)
-                throw new ArgumentException("Params must have a result.");
+            throw new NotImplementedException();
+        }
 
+        protected override void ApplyGradientCPU(MatrixAndIndexArray p)
+        {
             bool isRow = type == FunctionType.Row;
             int vectorLen = isRow ? p.m.shape.width : p.m.shape.height;
 
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
-            MatrixCPU r = (MatrixCPU)p.result.matrixBase;
+            MatrixCPU r = (MatrixCPU)p.result!.matrixBase;
 
             CPUManager.RunTask(0, vectorLen * p.i.Length, i =>
             {
@@ -59,6 +58,11 @@ namespace Duck.Functions.Basic
                 int dstCol = isRow ? 0 : i % vectorLen;
                 m.AddGradient(srcRow, srcCol, r.GetGradient(dstRow, dstCol, p.result.transposed), p.m.transposed);
             });
+        }
+
+        protected override void ApplyGradientGPU(MatrixAndIndexArray p)
+        {
+            throw new NotImplementedException();
         }
     }
 }

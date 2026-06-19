@@ -17,5 +17,15 @@ namespace Duck.Functions.Value.Single
             float c = MathF.Cos(v);
             return 1.0f / (c * c);
         }
+
+        public static string GetGPUApply()
+        {
+            return "tanf(x)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "1.0f / (cosf(x) * cosf(x))";
+        }
     }
 }

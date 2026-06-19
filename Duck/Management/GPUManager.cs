@@ -44,11 +44,34 @@ namespace Duck.Management
             return Context.LoadKernelPTX(ptx, "Main");
         }
 
-        public static IEnumerable<Type> GetAllTypesThatImplementInterface<T>()
+        public static IEnumerable<Type> GetAllTypesThatImplementInterface(Type iface)
         {
-            return Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(type => typeof(T).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract);
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t =>
+                    !t.IsInterface &&
+                    !t.IsAbstract &&
+                    iface.IsAssignableFrom(t));
+        }
+
+        public static int StableHash(string s)
+        {
+            unchecked
+            {
+                const int offset = unchecked((int)2166136261);
+                const int prime = 16777619;
+
+                int hash = offset;
+
+                foreach (char c in s)
+                {
+                    hash ^= c;
+                    hash *= prime;
+                }
+
+                return hash;
+            }
         }
 
         public static void Dispose()

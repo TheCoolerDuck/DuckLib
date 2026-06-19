@@ -14,7 +14,21 @@ namespace Duck.Functions.Value.Double
         }
         public static (float a, float b) ApplyDerivative(float a, float b)
         {
-            return (b * MathF.Pow(a, b - 1), MathF.Pow(a, b) * MathF.Log(a));
+            float p = MathF.Pow(a, b);
+            return (b * p / a, p * MathF.Log(a));
+        }
+        public static string GetGPUApply()
+        {
+            return "powf(x, y)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return @"
+            {
+                float p = powf(x, y);
+                return make_float2(y * p / x, p * logf(x));
+            }";
         }
     }
 }

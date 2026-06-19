@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Duck.Device_Management
+namespace Duck.Management
 {
     public enum Device
     {
         CPU,
-        GPU
+        GPU,
+        Unspecified 
     }
     public static class DeviceManager
     {

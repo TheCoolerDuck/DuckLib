@@ -16,5 +16,15 @@ namespace Duck.Functions.Value.Single
         {
             return 1.0f / v;
         }
+
+        public static string GetGPUApply()
+        {
+            return "logf(x)";
+        }
+
+        public static string GetGPUApplyDerivative()
+        {
+            return "1.0f / x";
+        }
     }
 }

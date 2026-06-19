@@ -1,7 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-
-
-namespace Duck.Optimization
+﻿namespace Duck.Optimization
 {
     public abstract class Optimizer(Matrix[] parameters)
     {

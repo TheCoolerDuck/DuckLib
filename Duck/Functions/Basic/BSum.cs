@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Functions.Parameters;
+﻿using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
 
@@ -9,14 +8,13 @@ namespace Duck.Functions.Basic
     {
         private readonly FunctionType type = type;
 
-        public Matrix Apply(SingleMatrix p)
+        protected override Matrix ApplyCPU(SingleMatrix p)
         {
-            if (p.m.device != Device_Management.Device.CPU)
-                throw new NotImplementedException();
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
             float[,] values = new float[
                 type == FunctionType.Column ? p.m.shape.width : 1,
                 type == FunctionType.Row ? p.m.shape.height : 1];
+
             switch (type)
             {
                 case FunctionType.Column:
@@ -51,16 +49,20 @@ namespace Duck.Functions.Basic
                         }
                     break;
             }
-            p.result = new(values, new BackwardContext<SingleMatrix>(this, p));
+            p.result = new(values, new MatrixOptions() { Device = Device.CPU }, new BackwardContext<SingleMatrix>(this, p));
             return p.result;
         }
 
-        public void ApplyGradient(SingleMatrix p)
+        protected override Matrix ApplyGPU(SingleMatrix p)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void ApplyGradientCPU(SingleMatrix p)
         {
             if (p.result == null)
                 throw new ArgumentException("Params must have a result");
-            if (p.m.device != Device_Management.Device.CPU)
-                throw new NotImplementedException();
+
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
             MatrixCPU r = (MatrixCPU)p.result.matrixBase;
             switch (type)
@@ -89,6 +91,11 @@ namespace Duck.Functions.Basic
                                 m.AddGradient(row, col, grad, p.m.transposed);
                     break;
             }
+        }
+
+        protected override void ApplyGradientGPU(SingleMatrix p)
+        {
+            throw new NotImplementedException();
         }
     }
 }

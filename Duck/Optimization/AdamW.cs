@@ -1,5 +1,4 @@
-﻿using Duck.CustomLLM.Library.Objects.MatrixObjects;
-using Duck.Management;
+﻿using Duck.Management;
 using Duck.Matrix_Utilities;
 
 namespace Duck.Optimization
@@ -41,7 +40,7 @@ namespace Duck.Optimization
             {
                 ParameterData data = (ParameterData)parameter.matrixBase.optimizerData!;
 
-                if (parameter.device == Device_Management.Device.CPU)
+                if (parameter.device == Device.CPU)
                 {
                     MatrixCPU p = (MatrixCPU)parameter.matrixBase;
 

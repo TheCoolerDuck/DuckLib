@@ -68,10 +68,13 @@ namespace Duck.Matrix_Utilities
             if (gradient == null)
                 return;
 
-            if (transposed)
-                gradient[y, x] += value;
-            else
-                gradient[x, y] += value;
+            lock (gradient)
+            {
+                if (transposed)
+                    gradient[y, x] += value;
+                else
+                    gradient[x, y] += value;
+            }
         }
 
         internal override float[,] GetValues()
