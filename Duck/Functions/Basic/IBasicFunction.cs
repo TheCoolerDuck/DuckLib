@@ -20,6 +20,8 @@ namespace Duck.Functions.Basic
     {
         public Matrix Apply(T p)
         {
+            ValidateParameters(p);
+
             return p.GetOperationDevice() switch
             {
                 Device.CPU => ApplyCPU(p),
@@ -32,6 +34,7 @@ namespace Duck.Functions.Basic
             if (p.result == null)
                 throw new ArgumentException("Parameters must have a result for gradient passes");
 
+
             switch (p.GetOperationDevice())
             {
                 case Device.CPU: ApplyGradientCPU(p); break;
@@ -43,5 +46,6 @@ namespace Duck.Functions.Basic
         protected abstract void ApplyGradientCPU(T p);
         protected abstract Matrix ApplyGPU(T p);
         protected abstract void ApplyGradientGPU(T p);
+        protected abstract void ValidateParameters(T p);
     }
 }

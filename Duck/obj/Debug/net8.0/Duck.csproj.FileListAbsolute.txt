@@ -20,3 +20,4 @@ C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\Elem
 C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionGradient.cu
 C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApply.h
 C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApplyGradient.h
+C:\Users\pjsol\source\repos\DuckLib\Duck\bin\Debug\net8.0\Functions\GPUCode\Extend.cu

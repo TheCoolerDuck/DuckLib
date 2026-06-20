@@ -60,11 +60,8 @@ namespace Duck.Functions.Basic
 
         protected override void ApplyGradientCPU(SingleMatrix p)
         {
-            if (p.result == null)
-                throw new ArgumentException("Params must have a result");
-
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
-            MatrixCPU r = (MatrixCPU)p.result.matrixBase;
+            MatrixCPU r = (MatrixCPU)p.result!.matrixBase;
             switch (type)
             {
                 case FunctionType.Column:
@@ -97,5 +94,7 @@ namespace Duck.Functions.Basic
         {
             throw new NotImplementedException();
         }
+
+        protected override void ValidateParameters(SingleMatrix p) { }
     }
 }

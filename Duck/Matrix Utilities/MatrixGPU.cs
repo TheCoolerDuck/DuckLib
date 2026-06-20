@@ -64,8 +64,19 @@ namespace Duck.Matrix_Utilities
 
         internal override float[,] GetValues()
         {
+            float[] flat = new float[shape.width * shape.height];
             float[,] output = new float[shape.width, shape.height];
-            values.CopyToHost(output);
+
+            values.CopyToHost(flat);
+
+            for (int y = 0; y < shape.height; y++)
+            {
+                for (int x = 0; x < shape.width; x++)
+                {
+                    output[x, y] = flat[y * shape.width + x];
+                }
+            }
+
             return output;
         }
 

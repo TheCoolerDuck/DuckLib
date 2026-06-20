@@ -3,6 +3,8 @@ __device__ float apply(float x, int ID)
 {
     switch(ID)
     {
+        case -1932355109: return x < 0 ? -x : x;
+        case 1932355109: return x < 0 ? -1 : 1;;
         case 1578662460: return cosf(x);
         case -1578662460: return -sinf(x);
         case -676624440: return expf(x);

@@ -28,3 +28,4 @@ C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCod
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionGradient.cu
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApply.h
 C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\MatrixFunctionsApplyGradient.h
+C:\Users\pjsol\source\repos\DuckLib\ScratchLLM\bin\Debug\net8.0\Functions\GPUCode\Extend.cu

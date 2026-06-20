@@ -112,7 +112,6 @@ __device__ float apply(float x, int ID)
             File.WriteAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\ElementFuntionsApply.h", sb.ToString());
         }
 
-
-
+        protected override void ValidateParameters(SingleMatrix p) { }
     }
 }

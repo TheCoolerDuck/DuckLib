@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScratchLLM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0900a5401aece8aec8b341166f7d047c6b208586")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eed7c20ff447ef3df196ccc1fc15a0bbafaab865")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScratchLLM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScratchLLM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,7 @@
 ﻿using Duck.Functions.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
+using ManagedCuda;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +42,6 @@ namespace Duck.Functions.Basic
 
         protected override Matrix ApplyCPU(MatrixAndIndex p)
         {
-            if (type == FunctionType.Row && !p.m.IsColVector() && !p.m.IsScalar())
-                throw new ArgumentException($"matrix must be a column vector for row wise extension {p.m}");
-
-            if (type == FunctionType.Column && !p.m.IsRowVector() && !p.m.IsScalar())
-                throw new ArgumentException($"matrix must be a row vector for column wise extension {p.m}");
-
             MatrixCPU m = (MatrixCPU)p.m.matrixBase;
 
             int width = type == FunctionType.Row ? p.i : m.shape.width;
@@ -68,7 +63,20 @@ namespace Duck.Functions.Basic
 
         protected override Matrix ApplyGPU(MatrixAndIndex p)
         {
-            throw new NotImplementedException();
+            int width = type == FunctionType.Row ? p.i : p.m.shape.width;
+            int height = type == FunctionType.Column ? p.i : p.m.shape.height;
+
+            CudaDeviceVariable<float> values = new(width * height);
+            p.result = new Matrix((width, height), values, new BackwardContext<MatrixAndIndex>(this, p));
+
+            applyKernel.BlockDimensions = 64;
+            applyKernel.GridDimensions = (p.m.size + 63) / 64;
+
+            applyKernel.Run(p.m.GPUValues(), p.result.GPUValues());
+
+            GPUManager.Context.Synchronize();
+
+            return p.result;
         }
 
         protected override void ApplyGradientCPU(MatrixAndIndex p)
@@ -89,5 +97,18 @@ namespace Duck.Functions.Basic
         {
             throw new NotImplementedException();
         }
+
+        protected override void ValidateParameters(MatrixAndIndex p)
+        {
+            if (type == FunctionType.Row && !p.m.IsColVector() && !p.m.IsScalar())
+                throw new ArgumentException($"matrix must be a column vector for row wise extension {p.m}");
+
+            if (type == FunctionType.Column && !p.m.IsRowVector() && !p.m.IsScalar())
+                throw new ArgumentException($"matrix must be a row vector for column wise extension {p.m}");
+        }
+
+        private static CudaKernel? _applyKernel;
+        public static CudaKernel applyKernel => _applyKernel ??= GPUManager.Compile(File.ReadAllText("Functions\\GPUCode\\Extend.cu"));
+
     }
 }

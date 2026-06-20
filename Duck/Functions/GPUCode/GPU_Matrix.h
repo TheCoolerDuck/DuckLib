@@ -7,25 +7,26 @@ struct Matrix
 
 	__device__ float Get(int x, int y)
 	{
-		return values[index(x, y)];
+		return values[Index(x, y)];
 	}
 
 	__device__ void Set(int x, int y, float value)
 	{
-		printf("set x:%d y:%d v:%f \\\n", x, y, value);
-		values[index(x, y)] = value;
+		values[Index(x, y)] = value;
 	}
 
 	__device__ void Add(int x, int y, float value)
 	{
-		values[index(x, y)] += value;
+		values[Index(x, y)] += value;
 	}
 
-	__device__ int index(int x, int y)
+	__device__ int Index(int x, int y)
 	{
-		if (transposed)
-			return y * height + x;
-		else
-			return x * width + y;
+		return y * width + x;
+	}
+
+	__device__ int2 Quards(int i)
+	{
+		return make_int2(i % width, i / width);
 	}
 };

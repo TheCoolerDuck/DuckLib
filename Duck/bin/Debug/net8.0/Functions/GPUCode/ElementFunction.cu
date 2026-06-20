@@ -3,13 +3,17 @@
 #include "Functions\\GPUCode\\ElementFuntionsApply.h"
 
 
-extern "C" __global__ void Main(Matrix a, Matrix b, int funcID)
+extern "C" __global__ void Main(Matrix a, Matrix r, int funcID)
 {
     int ID = blockIdx.x * blockDim.x + threadIdx.x;
-    int x = ID / a.height;
-    int y = ID % a.height;
+
+    int2 quards = r.Quards(ID);
+
+    int x = quards.x;
+    int y = quards.y;
+
     if (ID < a.width * a.height)
     {
-        b.Add(x, y, apply(a.Get(x, y), funcID));
+        r.Add(x, y, apply(a.Get(x, y), funcID));
     }
 }

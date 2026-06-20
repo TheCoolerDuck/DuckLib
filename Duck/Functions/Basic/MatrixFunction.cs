@@ -15,9 +15,6 @@ namespace Duck.Functions.Basic
     {
         protected override Matrix ApplyCPU(DoubleMatrix p)
         {
-            if (p.a.shape != p.b.shape)
-                throw new ArgumentException($"Matrices must be of same shape {p.a} {p.b}");
-
             MatrixCPU aCPU = (MatrixCPU)p.a.matrixBase;
             MatrixCPU bCPU = (MatrixCPU)p.b.matrixBase;
 
@@ -54,9 +51,6 @@ namespace Duck.Functions.Basic
 
         protected override Matrix ApplyGPU(DoubleMatrix p)
         {
-            if (p.a.shape != p.b.shape)
-                throw new ArgumentException($"Matrices must be of same shape {p.a} {p.b}");
-
             CudaDeviceVariable<float> values = new(p.a.shape.width * p.a.shape.height);
             p.result = new Matrix((p.a.shape.width, p.a.shape.height), values, new BackwardContext<DoubleMatrix>(this, p));
 
@@ -134,6 +128,12 @@ __device__ float2 apply(float x, float y, int ID)
             File.WriteAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixFunctionsApply.h", forward.ToString());
             File.WriteAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\Duck\\Functions\\GPUCode\\MatrixFunctionsApplyGradient.h", backward.ToString());
 
+        }
+
+        protected override void ValidateParameters(DoubleMatrix p)
+        {
+            if (p.a.shape != p.b.shape)
+                throw new ArgumentException($"Matrices must be of same shape {p.a} {p.b}");
         }
     }
 }

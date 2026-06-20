@@ -16,15 +16,12 @@ namespace Duck.Functions.Basic
     public class Mask(float maskValue, MaskType maskType) : IBasicFunction<SingleMatrix>
     {
         private readonly float maskValue = maskValue;
-        private readonly MaskType maskType;
+        private readonly MaskType maskType = maskType;
 
         protected override Matrix ApplyCPU(SingleMatrix p)
         {
             if (maskType == MaskType.Tri)
             {
-                if (p.m.shape.width != p.m.shape.height)
-                    throw new ArgumentException("Width must equal height for tri mask");
-
                 float[,] values = new float[p.m.shape.width, p.m.shape.height];
 
                 MatrixCPU m = (MatrixCPU)p.m.matrixBase;
@@ -56,9 +53,6 @@ namespace Duck.Functions.Basic
         {
             if (maskType == MaskType.Tri)
             {
-                if (p.m.shape.width != p.m.shape.height)
-                    throw new ArgumentException("Width must equal height for tri mask");
-
                 MatrixCPU m = (MatrixCPU)p.m.matrixBase;
                 MatrixCPU r = (MatrixCPU)p.result!.matrixBase;
 
@@ -77,6 +71,19 @@ namespace Duck.Functions.Basic
         protected override void ApplyGradientGPU(SingleMatrix p)
         {
             throw new NotImplementedException();
+        }
+
+        protected override void ValidateParameters(SingleMatrix p)
+        {
+            if (maskType == MaskType.Tri)
+            {
+                if (p.m.shape.width != p.m.shape.height)
+                    throw new ArgumentException("Width must equal height for tri mask");
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

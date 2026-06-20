@@ -21,7 +21,7 @@ namespace Duck.Modules.Advanced
             for (int y = 0; y < m.shape.width; y++)
             {
                 Matrix t = weight * y + bias;
-                output[y] = t << m.getCol(y);
+                output[y] = m.GetColumn(y) >> t;
             }
 
             return concatenate.Apply(output);

@@ -7,8 +7,10 @@ extern "C" __global__ void Main(Matrix a, Matrix b, Matrix ag, Matrix bg, Matrix
 {
     int ID = blockIdx.x * blockDim.x + threadIdx.x;
 
-    int x = ID / a.width;
-    int y = ID % a.height;
+    int2 quards = r.Quards(ID);
+
+    int x = quards.x;
+    int y = quards.y;
 
     if (ID < a.width * a.height)
     {

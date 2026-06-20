@@ -17,20 +17,6 @@ namespace Duck.Functions.Basic
 
         protected override Matrix ApplyCPU(MatrixArray p)
         {
-            if (p.a == null || p.a.Length == 0)
-                throw new ArgumentException("Matrix array must not be empty.");
-
-            // Validate shapes and devices
-            for (int i = 1; i < p.a.Length; i++)
-            {
-                if (type == FunctionType.Row && p.a[i].shape.width != p.a[0].shape.width)
-                    throw new ArgumentException($"Matrix shapes incompatible for row concatenation at index {i}: {p.a[i].shape} | {p.a[0].shape}");
-                if (type == FunctionType.Column && p.a[i].shape.height != p.a[0].shape.height)
-                    throw new ArgumentException($"Matrix shapes incompatible for column concatenation at index {i}: {p.a[i].shape} | {p.a[0].shape}");
-                if (p.a[i].device != p.a[0].device)
-                    throw new ArgumentException($"All matrices must be on the same device (mismatch at index {i})");
-            }
-
             // Compute output shape — sum along the concat axis, fixed on the other
             int nw = type == FunctionType.Column
                 ? p.a.Sum(m => m.shape.width)
@@ -97,6 +83,20 @@ namespace Duck.Functions.Basic
         protected override void ApplyGradientGPU(MatrixArray p)
         {
             throw new NotImplementedException();
+        }
+
+        protected override void ValidateParameters(MatrixArray p)
+        {
+            if (p.a == null || p.a.Length == 0)
+                throw new ArgumentException("Matrix array must not be empty.");
+
+            for (int i = 1; i < p.a.Length; i++)
+            {
+                if (type == FunctionType.Row && p.a[i].shape.width != p.a[0].shape.width)
+                    throw new ArgumentException($"Matrix shapes incompatible for row concatenation at index {i}: {p.a[i].shape} | {p.a[0].shape}");
+                if (type == FunctionType.Column && p.a[i].shape.height != p.a[0].shape.height)
+                    throw new ArgumentException($"Matrix shapes incompatible for column concatenation at index {i}: {p.a[i].shape} | {p.a[0].shape}");
+            }
         }
 
         /// <summary>

@@ -64,5 +64,7 @@ namespace Duck.Functions.Basic
         {
             throw new NotImplementedException();
         }
+
+        protected override void ValidateParameters(MatrixAndIndexArray p) { }
     }
 }

@@ -14,7 +14,7 @@ namespace Duck.Modules.Basic
 
         public Matrix Forward(Matrix m)
         {
-            return (weights << m) + bias;
+            return (m >> weights) + bias;
         }
 
         public Matrix[] GetParameters()

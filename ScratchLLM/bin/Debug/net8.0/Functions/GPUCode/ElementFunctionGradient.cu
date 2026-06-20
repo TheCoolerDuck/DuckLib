@@ -6,8 +6,12 @@
 extern "C" __global__ void Main(Matrix a, Matrix ag, Matrix bg, int funcID)
 {
     int ID = blockIdx.x * blockDim.x + threadIdx.x;
-    int x = ID / a.height;
-    int y = ID % a.height;
+
+    int2 quards = r.Quards(ID);
+
+    int x = quards.x;
+    int y = quards.y;
+
     if (ID < a.width * a.height)
     {
         ag.Add(x, y, apply(a.Get(x, y), -funcID) * bg.Get(x, y));

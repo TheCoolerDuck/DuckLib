@@ -39,8 +39,6 @@ namespace ScratchLLM
 
         private readonly Mask maskNegInf = new(float.NegativeInfinity, MaskType.Tri);
 
-        private readonly Concatenate concatenate = new(FunctionType.Row);
-
         public SimpleLLMModel(Tokenizer tokenizer)
         {
             eigenVectors = new Matrix(Matrix.Random(vectorDims, tokenizer.tokenCount));
@@ -57,7 +55,7 @@ namespace ScratchLLM
 
         public Matrix TokensToVectors(int[] tokens)
         {
-            return eigenVectors.getRows(tokens);
+            return eigenVectors.GetRows(tokens);
         }
 
         public Matrix Forward(Matrix m)
@@ -69,17 +67,17 @@ namespace ScratchLLM
                 {
                     Matrix n = normilization.Forward(m);
 
-                    Matrix keys = keyMatrices[layer] << n;
-                    Matrix queries = (queryMatrices[layer] << n).T();
-                    Matrix values = valueMatrices[layer] << n;
+                    Matrix keys = n >> keyMatrices[layer];
+                    Matrix queries = (n >> queryMatrices[layer]).T();
+                    Matrix values = n >> valueMatrices[layer];
 
-                    Matrix preweights = queries << keys;
+                    Matrix preweights = keys >> queries;
 
                     Matrix masked = maskNegInf.Apply(preweights);
 
                     Matrix weights = softMax.Forward(masked);
 
-                    m += values << weights;
+                    m += weights >> values;
                 }
 
                 {

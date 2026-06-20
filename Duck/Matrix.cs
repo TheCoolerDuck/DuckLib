@@ -120,8 +120,56 @@ namespace Duck
 
         #region Data Access
 
-        public float[,] values => matrixBase.GetValues();
-        public float[,] gradients => matrixBase.GetGradients();
+        public float[,] values
+        {
+            get
+            {
+                float[,] src = matrixBase.GetValues();
+
+                if (!transposed)
+                    return src;
+
+                int w = src.GetLength(0);
+                int h = src.GetLength(1);
+
+                float[,] t = new float[h, w];
+
+                for (int y = 0; y < h; y++)
+                {
+                    for (int x = 0; x < w; x++)
+                    {
+                        t[y, x] = src[x, y];
+                    }
+                }
+
+                return t;
+            }
+        }
+        public float[,] gradients
+        {
+            get
+            {
+                float[,] src = matrixBase.GetGradients();
+
+                if (!transposed)
+                    return src;
+
+                int w = src.GetLength(0);
+                int h = src.GetLength(1);
+
+                float[,] t = new float[h, w];
+
+                for (int y = 0; y < h; y++)
+                {
+                    for (int x = 0; x < w; x++)
+                    {
+                        t[y, x] = src[x, y];
+                    }
+                }
+
+                return t;
+            }
+        }
 
         public void Backwards() => matrixBase.Backwards();
         public void ZeroGradient() => matrixBase.ZeroGradient();
@@ -282,36 +330,23 @@ namespace Duck
 
         #endregion
 
-        #region Matrix Ops (Function Objects)
-
-        private static readonly MatrixMultiplication matMulObj = new();
-        private static readonly MatrixFunction<Div> divObj = new();
-        private static readonly MatrixFunction<Sub> subObj = new();
-        private static readonly MatrixFunction<Add> addObj = new();
-        private static readonly MatrixFunction<Mul> mulObj = new();
-        private static readonly GetVectors getRowObj = new(FunctionType.Row);
-        private static readonly GetVectors getColObj = new(FunctionType.Column);
-        private static readonly Concatenate rowCatObj = new(FunctionType.Row);
-        private static readonly Concatenate colCatObj = new(FunctionType.Column);
-
-        #endregion
 
         #region Operations
 
-        public Matrix matMul(Matrix o) => matMulObj.Apply((this, o));
-        public Matrix div(Matrix o) => divObj.Apply(Broadcast(this, o));
-        public Matrix sub(Matrix o) => subObj.Apply(Broadcast(this, o));
-        public Matrix add(Matrix o) => addObj.Apply(Broadcast(this, o));
-        public Matrix mul(Matrix o) => mulObj.Apply(Broadcast(this, o));
+        public Matrix MatMul(Matrix o) => new MatrixMultiplication().Apply((this, o));
+        public Matrix Div(Matrix o) => new MatrixFunction<Div>().Apply(Broadcast(this, o));
+        public Matrix Sub(Matrix o) => new MatrixFunction<Sub>().Apply(Broadcast(this, o));
+        public Matrix Add(Matrix o) => new MatrixFunction<Add>().Apply(Broadcast(this, o));
+        public Matrix Mul(Matrix o) => new MatrixFunction<Mul>().Apply(Broadcast(this, o));
 
-        public Matrix div(float o) => divObj.Apply(Broadcast(this, Scalar(o)));
-        public Matrix iDiv(float o) => divObj.Apply(Broadcast(Scalar(o), this));
+        public Matrix Div(float o) => new MatrixFunction<Div>().Apply(Broadcast(this, Scalar(o)));
+        public Matrix InvDiv(float o) => new MatrixFunction<Div>().Apply(Broadcast(Scalar(o), this));
 
-        public Matrix sub(float o) => subObj.Apply(Broadcast(this, Scalar(o)));
-        public Matrix iSub(float o) => subObj.Apply(Broadcast(Scalar(o), this));
+        public Matrix Sub(float o) => new MatrixFunction<Sub>().Apply(Broadcast(this, Scalar(o)));
+        public Matrix InvSub(float o) => new MatrixFunction<Sub>().Apply(Broadcast(Scalar(o), this));
 
-        public Matrix add(float o) => addObj.Apply(Broadcast(this, Scalar(o)));
-        public Matrix mul(float o) => mulObj.Apply(Broadcast(this, Scalar(o)));
+        public Matrix Add(float o) => new MatrixFunction<Add>().Apply(Broadcast(this, Scalar(o)));
+        public Matrix Mul(float o) => new MatrixFunction<Mul>().Apply(Broadcast(this, Scalar(o)));
 
         private Matrix Scalar(float v)
             => new(new float[,] { { v } },
@@ -319,84 +354,83 @@ namespace Duck
 
         public static (Matrix a, Matrix b) Broadcast(Matrix a, Matrix b)
         {
-            bool isScalar = a.IsScalar() || b.IsScalar();
-            bool isRowVector = (a.IsRowVector() || b.IsRowVector()) && b.shape.width == a.shape.width; 
-            bool isColVector = (a.IsColVector() || b.IsColVector()) && b.shape.height == a.shape.height;
-            bool isSame = a.shape == b.shape;
-            if (!isScalar && !isRowVector && !isColVector && !isSame)
+            int aw = a.shape.width;
+            int ah = a.shape.height;
+
+            int bw = b.shape.width;
+            int bh = b.shape.height;
+
+            bool awOk = aw == bw || aw == 1 || bw == 1;
+            bool ahOk = ah == bh || ah == 1 || bh == 1;
+
+            if (!awOk || !ahOk)
                 throw new ArgumentException(
-                    $"Matrices of incompatible shape: A: {a.shape}, B: {b.shape}");
+                    $"Incompatible broadcast shapes: A={a.shape}, B={b.shape}");
 
-            if (isSame)
-                return (a, b);
+            Matrix A = a;
+            Matrix B = b;
 
-            if (a.shape.width > b.shape.width && a.shape.height > b.shape.height)
-                return (a, Extend.ApplyWhole(b, a.shape.width, a.shape.height));
+            if (aw == 1 && bw > 1)
+                A = new Extend(FunctionType.Row).Apply((A, bw));
 
-            if (a.shape.width > b.shape.width)
-                return (a, new Extend(FunctionType.Row).Apply((b, a.shape.width)));
+            if (bw == 1 && aw > 1)
+                B = new Extend(FunctionType.Row).Apply((B, aw));
 
-            if (a.shape.height > b.shape.height)
-                return (a, new Extend(FunctionType.Column).Apply((b, a.shape.height)));
+            if (ah == 1 && bh > 1)
+                A = new Extend(FunctionType.Column).Apply((A, bh));
 
-            if (b.shape.width > a.shape.width && b.shape.height > a.shape.height)
-                return (Extend.ApplyWhole(a, b.shape.width, b.shape.height), b);
+            if (bh == 1 && ah > 1)
+                B = new Extend(FunctionType.Column).Apply((B, ah));
 
-            if (b.shape.width > a.shape.width)
-                return (new Extend(FunctionType.Row).Apply((a, b.shape.width)), b);
-
-            if (b.shape.height > a.shape.height)
-                return (new Extend(FunctionType.Column).Apply((a, b.shape.height)), b);
-
-            throw new Exception("im really not sure how we got here :/");
+            return (A, B);
         }
 
-        public Matrix getRow(int i) => getRowObj.Apply((this, [i]));
-        public Matrix getCol(int i) => getColObj.Apply((this, [i]));
-        public Matrix getRows(int[] i) => getRowObj.Apply((this, i));
-        public Matrix getCols(int[] i) => getColObj.Apply((this, i));
+        public Matrix GetRow(int i) => new GetVectors(FunctionType.Row).Apply((this, [i]));
+        public Matrix GetColumn(int i) => new GetVectors(FunctionType.Column).Apply((this, [i]));
+        public Matrix GetRows(int[] i) => new GetVectors(FunctionType.Row).Apply((this, i));
+        public Matrix getColumns(int[] i) => new GetVectors(FunctionType.Column).Apply((this, i));
 
-        public Matrix rowConcatenate(Matrix o) => rowCatObj.Apply(new Matrix[] { this, o });
-        public Matrix colConcatenate(Matrix o) => colCatObj.Apply(new Matrix[] { this, o });
+        public Matrix RowConcatenate(Matrix o) => new Concatenate(FunctionType.Row).Apply(new Matrix[] { this, o });
+        public Matrix ColumnConcatenate(Matrix o) => new Concatenate(FunctionType.Column).Apply(new Matrix[] { this, o });
 
         #endregion
 
         #region Operators
 
-        public static Matrix operator <<(Matrix a, Matrix b) => a.matMul(b);
-        public static Matrix operator /(Matrix a, Matrix b) => a.div(b);
-        public static Matrix operator -(Matrix a, Matrix b) => a.sub(b);
-        public static Matrix operator +(Matrix a, Matrix b) => a.add(b);
-        public static Matrix operator *(Matrix a, Matrix b) => a.mul(b);
+        public static Matrix operator >>(Matrix a, Matrix b) => a.MatMul(b);
+        public static Matrix operator /(Matrix a, Matrix b) => a.Div(b);
+        public static Matrix operator -(Matrix a, Matrix b) => a.Sub(b);
+        public static Matrix operator +(Matrix a, Matrix b) => a.Add(b);
+        public static Matrix operator *(Matrix a, Matrix b) => a.Mul(b);
 
-        public static Matrix operator /(Matrix a, float b) => a.div(b);
-        public static Matrix operator -(Matrix a, float b) => a.sub(b);
-        public static Matrix operator +(Matrix a, float b) => a.add(b);
-        public static Matrix operator *(Matrix a, float b) => a.mul(b);
+        public static Matrix operator /(Matrix a, float b) => a.Div(b);
+        public static Matrix operator -(Matrix a, float b) => a.Sub(b);
+        public static Matrix operator +(Matrix a, float b) => a.Add(b);
+        public static Matrix operator *(Matrix a, float b) => a.Mul(b);
 
-        public static Matrix operator /(float a, Matrix b) => b.iDiv(a);
-        public static Matrix operator -(float a, Matrix b) => b.iSub(a);
-        public static Matrix operator +(float a, Matrix b) => b.add(a);
-        public static Matrix operator *(float a, Matrix b) => b.mul(a);
+        public static Matrix operator /(float a, Matrix b) => b.InvDiv(a);
+        public static Matrix operator -(float a, Matrix b) => b.InvSub(a);
+        public static Matrix operator +(float a, Matrix b) => b.Add(a);
+        public static Matrix operator *(float a, Matrix b) => b.Mul(a);
 
-        public static Matrix operator -(Matrix a) => a.mul(-1);
+        public static Matrix operator -(Matrix a) => a.Mul(-1);
 
-        public static Matrix operator &(Matrix a, Matrix b) => a.rowConcatenate(b);
-        public static Matrix operator |(Matrix a, Matrix b) => a.colConcatenate(b);
+        public static Matrix operator &(Matrix a, Matrix b) => a.RowConcatenate(b);
+        public static Matrix operator |(Matrix a, Matrix b) => a.ColumnConcatenate(b);
 
         #endregion
 
         #region Indexers
 
-        public Matrix this[int i] => getRow(i);
+        public Matrix this[int i] => GetRow(i);
 
         public Matrix this[int i, FunctionType type]
-            => type == FunctionType.Row ? getRow(i)
-             : type == FunctionType.Column ? getCol(i)
+            => type == FunctionType.Row ? GetRow(i)
+             : type == FunctionType.Column ? GetColumn(i)
              : throw new ArgumentException($"Function Type: {type} not allowed");
 
-        public Matrix this[int i, char _] => getRow(i);
-        public Matrix this[char _, int i] => getCol(i);
+        public Matrix this[int i, char _] => GetRow(i);
+        public Matrix this[char _, int i] => GetColumn(i);
 
         #endregion
 
