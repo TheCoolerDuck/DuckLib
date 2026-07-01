@@ -10,7 +10,7 @@ namespace Duck.Management
     {
         CPU,
         GPU,
-        Unspecified 
+        Unspecified
     }
     public static class DeviceManager
     {

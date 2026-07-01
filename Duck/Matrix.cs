@@ -1,4 +1,5 @@
-﻿using Duck.Functions.Basic;
+﻿using Duck.Functional.Elementary;
+using Duck.Functions.Basic;
 using Duck.Functions.Value.Double;
 using Duck.Management;
 using Duck.Matrix_Utilities;
@@ -23,7 +24,11 @@ namespace Duck
         internal readonly MatrixBase matrixBase;
         public readonly bool transposed = false;
 
-        public Device device => matrixBase is MatrixCPU ? Device.CPU : Device.GPU;
+        public Device device => matrixBase.device;
+
+        public bool hasGradient => matrixBase.hasGradient;
+
+        public int ID => matrixBase.ID;
 
         #endregion
 
@@ -35,6 +40,12 @@ namespace Duck
         public Matrix(float[,] values)
             : this(values, new MatrixOptions(), null) { }
 
+        public Matrix(ValuePackage values, MatrixOptions options)
+           : this(values.values, options, null) { }
+
+        public Matrix(ValuePackage values)
+            : this(values.values, new MatrixOptions(), null) { }
+
         internal Matrix(float[,] values, IBackwardContext? backwardContext)
             : this(values, new MatrixOptions(), backwardContext) { }
 
@@ -43,12 +54,12 @@ namespace Duck
             matrixBase =
                 options.Device == Device.CPU
                     ? new MatrixCPU(values, options.HasGrad, backwardContext, options.Name)
-                    : new MatrixGPU(values, backwardContext, options.Name);
+                    : new MatrixGPU(values, backwardContext, options.HasGrad, options.Name);
         }
 
-        internal Matrix((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext ctx)
+        internal Matrix((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext ctx, bool hasGradient = true)
         {
-            matrixBase = new MatrixGPU(shape, values, ctx);
+            matrixBase = new MatrixGPU(shape, values, ctx, hasGradient);
         }
 
         public Matrix(string dataString, bool hasGrad = true)
@@ -86,7 +97,7 @@ namespace Duck
             matrixBase =
                 device == Device.CPU
                     ? new MatrixCPU(values, hasGrad, null, name)
-                    : new MatrixGPU(values, null, name);
+                    : new MatrixGPU(values, null, hasGrad, name);
         }
 
         private Matrix(Matrix m)
@@ -171,6 +182,7 @@ namespace Duck
             }
         }
 
+        public void Detach() => matrixBase.Detach(null);
         public void Backwards() => matrixBase.Backwards();
         public void ZeroGradient() => matrixBase.ZeroGradient();
 
@@ -180,11 +192,21 @@ namespace Duck
         internal GPUMatrixStruct GPUGradient()
             => new(this, ((MatrixGPU)matrixBase).gradient!);
 
+        public (int x, int y) XYFromIndex(int i)
+        {
+            return (i % shape.width, i / shape.width);
+        }
+
+        public int IndexFromXY(int x, int y)
+        {
+            return y * shape.width + x;
+        }
+
         #endregion
 
         #region Formatting
 
-        private const int DefaultSize = 8;
+        private const int DefaultSize = 5;
 
         public override string ToString()
             => ToString(DefaultSize.ToString(), CultureInfo.CurrentCulture);
@@ -200,133 +222,8 @@ namespace Duck
                 _ => throw new FormatException($"Unrecognized format: '{format}'")
             };
         }
-        public string InterfaceString(int resultSize)
-        {
-            StringBuilder sb = new();
-
-            sb.AppendLine(
-                $"Matrix {matrixBase.name}; ID: {matrixBase.ID:X}; Shape: {shape}"
-            );
-
-            sb.AppendLine("Values:");
-
-            float[,] values = matrixBase.GetValues();
-
-            AddMatrix((x, y) => transposed ? values[y, x] : values[x, y]);
-
-            if (matrixBase.HasGradient())
-            {
-                sb.AppendLine("Gradient:");
-
-                float[,] gradients = matrixBase.GetGradients();
-
-                AddMatrix((x, y) => transposed ? gradients[y, x] : gradients[x, y]);
-            }
-
-            void AddMatrix(Func<int, int, float> func)
-            {
-                int w = shape.width;
-                int h = shape.height;
-
-                int maxX = Math.Min(resultSize, w);
-                int maxY = Math.Min(resultSize, h);
-
-                sb.Append("[ ");
-
-                for (int y = 0; y < maxY; y++)
-                {
-                    if (y > 0)
-                        sb.Append("  ");
-
-                    for (int x = 0; x < maxX; x++)
-                    {
-                        bool xDots = x == resultSize - 2 && w > resultSize;
-                        bool yDots = y == resultSize - 2 && h > resultSize;
-
-                        if (xDots && yDots)
-                        {
-                            sb.Append("⋱  ");
-                        }
-                        else if (xDots)
-                        {
-                            sb.Append("⋯  ");
-                        }
-                        else if (yDots)
-                        {
-                            sb.Append("  ⋮  ");
-                        }
-                        else
-                        {
-                            sb.Append(FormatFloat(func(x, y)));
-                        }
-
-                        if (x < maxX - 1)
-                            sb.Append(", ");
-                    }
-
-                    if (y < maxY - 1)
-                        sb.AppendLine();
-                }
-
-                sb.Append(" ]\n");
-            }
-
-            return sb.ToString();
-        }
-
-        public string DataString(string format)
-        {
-            StringBuilder sb = new();
-
-            sb.Append($"{matrixBase.name}:{shape.width},{shape.height}:{device}:{format}:");
-
-            float[,] values = matrixBase.GetValues();
-
-            byte[] data = new byte[shape.width * shape.height * sizeof(uint)];
-            int offset = 0;
-
-            for (int x = 0; x < shape.width; x++)
-            {
-                for (int y = 0; y < shape.height; y++)
-                {
-                    uint bits = BitConverter.SingleToUInt32Bits(
-                        transposed ? values[y, x] : values[x, y]);
-
-                    BitConverter.GetBytes(bits)
-                        .CopyTo(data, offset);
-
-                    offset += sizeof(uint);
-                }
-            }
-
-            sb.Append(Convert.ToBase64String(data));
-
-            return sb.ToString();
-        }
-        private static string FormatFloat(float f) 
-        { 
-            if (float.IsNaN(f)) return " Nan ";
-            if (f == float.PositiveInfinity) return " +∞ ";
-            if (f == float.NegativeInfinity) return " -∞ ";
-
-            if (f >= 0) 
-            { 
-                if (f >= 10_000) return "#####"; 
-                if (f >= 1_000) return ((int)f).ToString(); 
-                if (f >= 100) return f.ToString("F1"); 
-                if (f >= 10) return f.ToString("F2"); 
-                
-                return f.ToString("F3"); 
-            } 
-            else 
-            { 
-                if (f <= -1_000) return "-####"; 
-                if (f <= -100) return ((int)f).ToString(); 
-                if (f <= -10) return f.ToString("F1"); 
-                
-                return f.ToString("F2"); 
-            } 
-        }
+        public string InterfaceString(int resultSize) => matrixBase.InterfaceString(resultSize, transposed);
+        public string DataString(string format) => matrixBase.DataString(format, transposed);
 
         #endregion
 
@@ -388,7 +285,7 @@ namespace Duck
         public Matrix GetRow(int i) => new GetVectors(FunctionType.Row).Apply((this, [i]));
         public Matrix GetColumn(int i) => new GetVectors(FunctionType.Column).Apply((this, [i]));
         public Matrix GetRows(int[] i) => new GetVectors(FunctionType.Row).Apply((this, i));
-        public Matrix getColumns(int[] i) => new GetVectors(FunctionType.Column).Apply((this, i));
+        public Matrix GetColumns(int[] i) => new GetVectors(FunctionType.Column).Apply((this, i));
 
         public Matrix RowConcatenate(Matrix o) => new Concatenate(FunctionType.Row).Apply(new Matrix[] { this, o });
         public Matrix ColumnConcatenate(Matrix o) => new Concatenate(FunctionType.Column).Apply(new Matrix[] { this, o });
@@ -436,37 +333,49 @@ namespace Duck
 
         #region Generators
 
-        public static float[,] Random(int w, int h, float denom = 1)
+        public static ValuePackage Random(int w, int h)
         {
             var r = new Random();
             var m = new float[w, h];
 
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
-                    m[x, y] = (float)((r.NextDouble() - 0.5) * 2 / denom);
+                    m[x, y] = (float)((r.NextDouble() - 0.5) * 2);
 
-            return m;
+            return new ValuePackage(m);
         }
 
-        public static float[,] Zeros(int w, int h) => new float[w, h];
+        public static ValuePackage Identity(int size)
+        {
+            var m = new float[size, size];
 
-        public static float[,] Ones(int w, int h)
+            for (int x = 0; x < size; x++)
+                for (int y = 0; y < size; y++)
+                    m[x, y] = x == y ? 1 : 0;
+
+            return new ValuePackage(m);
+        }
+
+        public static ValuePackage Zeros(int w, int h) => new(new float[w, h]);
+
+        public static ValuePackage Ones(int w, int h)
         {
             var m = new float[w, h];
             for (int x = 0; x < w; x++)
                 for (int y = 0; y < h; y++)
                     m[x, y] = 1;
-            return m;
+            return new ValuePackage(m);
         }
 
-        public static float[,] OneHot(int value, int categories, int width = 1)
+        public static ValuePackage OneHot(int value, int categories, int width = 1)
         {
             var m = new float[width, categories];
+            
+            for (int x = 0; x < width; x++)
+                for (int y = 0; y < categories; y++)
+                    m[x, y] = y == value ? 1 : 0;
 
-            for (int y = 0; y < categories; y++)
-                m[0, y] = y == value ? 1 : 0;
-
-            return m;
+            return new ValuePackage(m);
         }
 
         #endregion

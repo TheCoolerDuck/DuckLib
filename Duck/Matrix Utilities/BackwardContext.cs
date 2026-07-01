@@ -1,4 +1,4 @@
-﻿using Duck.Functions.Basic;
+﻿using Duck.Functional.Elementary;
 using Duck.Functions.Parameters;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ namespace Duck.Matrix_Utilities
 {
     internal interface IBackwardContext
     {
+        public IParameter parameter { get; }
         public void WalkBack();
         public void ZeroGradient();
     }
@@ -18,6 +19,8 @@ namespace Duck.Matrix_Utilities
     {
         private readonly IBasicFunction<T>? function; // null signifys loss function was aplied
         private readonly T parameters;
+
+        public IParameter parameter => parameters;
 
         public BackwardContext(IBasicFunction<T>? function, T parameters)
         {
@@ -30,6 +33,8 @@ namespace Duck.Matrix_Utilities
         }
         public void WalkBack()
         {
+
+
             function?.ApplyGradient(parameters);
 
             foreach (Matrix mat in parameters.MatricesUsed())

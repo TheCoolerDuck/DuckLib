@@ -1,14 +1,14 @@
-﻿using Duck.Functions.Basic;
-using Duck.Functions.Parameters;
+﻿using Duck.Functional.Elementary;
+using Duck.Functional.Parameters;
 using Duck.Management;
 using Duck.Matrix_Utilities;
-using Duck.Modules.Advanced;
+using Duck.Modules.Basic;
 
 namespace Duck.Modules.Loss
 {
     public class CrossEntropy : ILoss<MatrixAndIndexArray>
     {
-        private readonly static SoftMax softMax = new(FunctionType.Column);
+        private readonly static SoftMax softMax = new();
         public Matrix Apply(MatrixAndIndexArray p)
         {
             if (p.m.device == Device.CPU)

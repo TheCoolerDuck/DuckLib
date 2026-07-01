@@ -47,11 +47,16 @@ namespace Duck.Optimization
                     CPUManager.RunTask(0, parameter.shape.width, 0, parameter.shape.height, (x, y) =>
                     {
                         float gradient = p.GetGradient(x, y, parameter.transposed);
+
+                        if (!float.IsRealNumber(gradient))
+                            throw new Exception("Gradient is invalid");
+
                         data.m[x, y] = b1 * data.m[x, y] + oneMinusB1 * gradient;
                         data.v[x, y] = b2 * data.v[x, y] + oneMinusB2 * gradient * gradient;
                         float mHat = data.m[x, y] / b1Correction;
                         float vHat = data.v[x, y] / b2Correction;
-                        p[x, y, parameter.transposed] = (p[x, y, parameter.transposed] - mHat / (MathF.Sqrt(vHat) + e) * lr) * oneMinusWeightDecay;
+                        p[x, y, parameter.transposed] *= oneMinusWeightDecay;
+                        p[x, y, parameter.transposed] -= mHat / (MathF.Sqrt(vHat) + e) * lr;
                     });
                 }
                 else

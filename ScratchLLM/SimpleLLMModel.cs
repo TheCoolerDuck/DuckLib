@@ -1,26 +1,26 @@
 ﻿
 using Duck;
+using Duck.Functional.Elementary;
 using Duck.Functions.Basic;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
 using Duck.Modules.Activation;
-using Duck.Modules.Advanced;
 using Duck.Modules.Basic;
+using Duck.Modules.Normalization;
+using Duck.Modules.PositionalEncoding;
 using Duck.Tokenization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ScratchLLM
 {
     internal class SimpleLLMModel : IModule
     {
-        private const int layers = 8;
-        private const int vectorDims = 16;
-        private const int key_queryDims = 4;
-
-        private readonly int[] forwardMLP_size = [16, 32];
-        private readonly int[] translationMLP_size = [16, 32];
-
-        private readonly IModule activation = new Swish();
+        private const int layers = 4;
+        private const int vectorDims = 64;
+        private const int key_queryDims = 16;
+        private readonly int[] forwardMLP_size = [64, 128];
+        private readonly int[] translationMLP_size = [64, 128];
 
         private readonly Matrix eigenVectors;
         private readonly Matrix[] keyMatrices;
@@ -29,11 +29,11 @@ namespace ScratchLLM
         private readonly Sequential[] forwardMLPs;
         private readonly Sequential translationMLP;
 
-        private readonly SoftMax softMax = new(FunctionType.Column);
+        private readonly BLOS blos;
 
-        private readonly Apply<TanH> normilization = new();
+        private readonly SoftMax softMax = new();
 
-        private readonly BLOS positionalEncoding = new(vectorDims);
+        private readonly LinearTanh[] normilization;
 
         private readonly Matrix[] parameters;
 
@@ -41,16 +41,54 @@ namespace ScratchLLM
 
         public SimpleLLMModel(Tokenizer tokenizer)
         {
-            eigenVectors = new Matrix(Matrix.Random(vectorDims, tokenizer.tokenCount));
+            eigenVectors = new Matrix(Matrix.Random(tokenizer.tokenCount, vectorDims), new MatrixOptions() { Name = "eigen vectors"});
 
-            keyMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), new MatrixOptions() { Name = $"key-{i}" } ))]; 
-            queryMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims, vectorDims), new MatrixOptions() { Name = $"query-{i}" }))];
-            valueMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, vectorDims, vectorDims), new MatrixOptions() { Name = $"value-{i}" }))];
+            blos = new(vectorDims);
+            //rope = new RoPE(vectorDims, 1024);
+            //LPE = new Matrix(Matrix.Random(1024, vectorDims));
 
-            forwardMLPs = [..Enumerable.Range(0, layers).Select(i => Sequential.MLP(vectorDims, forwardMLP_size, vectorDims, activation, $"forward-{i}"))];
-            translationMLP = Sequential.MLP(vectorDims, translationMLP_size, tokenizer.tokenCount, activation, "translation");
+            normilization = [.. Enumerable.Range(0, layers * 2 + 1).Select(i => new LinearTanh(vectorDims))];
 
-            parameters = [.. positionalEncoding.GetParameters(), eigenVectors, .. keyMatrices, .. queryMatrices, .. valueMatrices, .. forwardMLPs.SelectMany(m => m.GetParameters()), ..translationMLP.GetParameters()];
+            keyMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims) / MathF.Sqrt(vectorDims), new MatrixOptions() { Name = $"key-{i}" } ))]; 
+            queryMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, key_queryDims) / MathF.Sqrt(vectorDims), new MatrixOptions() { Name = $"query-{i}" }))];
+            valueMatrices = [.. Enumerable.Range(0, layers).Select(i => new Matrix(Matrix.Random(vectorDims, vectorDims) / MathF.Sqrt(vectorDims), new MatrixOptions() { Name = $"value-{i}" }))];
+
+            {
+
+                forwardMLPs = [.. Enumerable.Range(0, layers).Select(_ => {
+                    List<IModule> modules = [];
+
+                    int inSize = vectorDims;
+                    int i = 0;
+                    foreach (int h in forwardMLP_size)
+                    {
+                        modules.Add(new SwiGLU(inSize, h, "Forward " + _ + " SwiGLU " + i++));
+                        inSize = h;
+                    }
+
+                    modules.Add(new Linear(inSize, vectorDims));
+
+                    return new Sequential([.. modules]);
+                })];
+            }
+
+            {
+                List<IModule> modules = [];
+
+                int inSize = vectorDims;
+                int i = 0;
+                foreach (int h in translationMLP_size)
+                {
+                    modules.Add(new SwiGLU(inSize, h, "Translation SwiGLU " + i++));
+                    inSize = h;
+                }
+
+                modules.Add(new Linear(inSize, tokenizer.tokenCount));
+
+                translationMLP = new Sequential([.. modules]);
+            }
+
+            parameters = [eigenVectors, ..normilization.SelectMany(m => m.GetParameters()), .. keyMatrices, .. queryMatrices, .. valueMatrices, .. forwardMLPs.SelectMany(m => m.GetParameters()), ..translationMLP.GetParameters()];
         }
 
         public Matrix TokensToVectors(int[] tokens)
@@ -60,18 +98,18 @@ namespace ScratchLLM
 
         public Matrix Forward(Matrix m)
         {
-            m = positionalEncoding.Forward(m);
+            m = normilization[^1].Forward(blos.Forward(m));
 
             for (int layer = 0; layer < layers; layer++)
             {
                 {
-                    Matrix n = normilization.Forward(m);
+                    Matrix n = normilization[layer * 2].Forward(m);
 
                     Matrix keys = n >> keyMatrices[layer];
-                    Matrix queries = (n >> queryMatrices[layer]).T();
+                    Matrix queries = n >> queryMatrices[layer];
                     Matrix values = n >> valueMatrices[layer];
 
-                    Matrix preweights = keys >> queries;
+                    Matrix preweights = (queries >> keys.T()) / MathF.Sqrt(key_queryDims);
 
                     Matrix masked = maskNegInf.Apply(preweights);
 
@@ -81,7 +119,7 @@ namespace ScratchLLM
                 }
 
                 {
-                    Matrix n = normilization.Forward(m);
+                    Matrix n = normilization[layer * 2 + 1].Forward(m);
 
                     m += forwardMLPs[layer].Forward(n);
                 }

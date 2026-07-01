@@ -2,9 +2,9 @@
 using Duck.Modules.Basic;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
-using Duck.Modules.Advanced;
 using Duck.Tokenization;
 using Duck;
+using Duck.Modules.PositionalEncoding;
 
 namespace ScratchLLM
 {

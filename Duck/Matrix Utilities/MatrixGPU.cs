@@ -23,7 +23,7 @@ namespace Duck.Matrix_Utilities
         public readonly CudaDeviceVariable<float> values;
         public readonly CudaDeviceVariable<float>? gradient;
         public new readonly (int width, int height) shape;
-        internal MatrixGPU(float[,] values, IBackwardContext? backwardContext = null, string name = "") : base(backwardContext, name)
+        internal MatrixGPU(float[,] values, IBackwardContext? backwardContext = null, bool hasGradient = false, string name = "matrix") : base(backwardContext, name)
         {
             GPUManager.Ready();
             shape = (values.GetLength(0), values.GetLength(1));
@@ -36,14 +36,14 @@ namespace Duck.Matrix_Utilities
 
 
             this.values.CopyToDevice(flat);
-            gradient = null;
+            gradient = hasGradient ? new CudaDeviceVariable<float>(shape.width * shape.height) : null;
         }
-        internal MatrixGPU((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext backwardContext) : base(backwardContext, "")
+        internal MatrixGPU((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext backwardContext, bool hasGradient = true) : base(backwardContext, "")
         {
             GPUManager.Ready();
             this.shape = shape;
             this.values = values;
-            gradient = new CudaDeviceVariable<float>(shape.width * shape.height);
+            gradient = hasGradient ? new CudaDeviceVariable<float>(shape.width * shape.height) : null;
         }
 
 

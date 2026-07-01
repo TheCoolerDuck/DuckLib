@@ -1,4 +1,4 @@
-﻿using Duck.Functions.Basic;
+﻿using Duck.Functional.Elementary;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
 using System;
