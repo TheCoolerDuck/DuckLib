@@ -20,12 +20,12 @@ namespace Duck.Functions.Value.Single
 
         public static string GetGPUApply()
         {
-            return "tanf(x)";
+            return "return tanf(x);";
         }
 
         public static string GetGPUApplyDerivative()
         {
-            return "1.0f / (cosf(x) * cosf(x))";
+            return "return 1.0f / (cosf(x) * cosf(x));";
         }
     }
 }

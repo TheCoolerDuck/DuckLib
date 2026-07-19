@@ -11,6 +11,7 @@
     <None Remove="Functional\GPUCode\ElementFuntionsApply.h" />
     <None Remove="Functional\GPUCode\Extend.cu" />
     <None Remove="Functional\GPUCode\GetVectors.cu" />
+    <None Remove="Functional\GPUCode\Mask.cu" />
     <None Remove="Functional\GPUCode\MatrixFunction.cu" />
     <None Remove="Functional\GPUCode\MatrixFunctionsApply.h" />
     <None Remove="Functional\GPUCode\MatrixFunctionsApplyGradient.h" />
@@ -18,43 +19,43 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Functional\GPUCode\SymmetricApplication.cu">
+    <Content Include="Functional\Elementary\Concatenate\ConcatenateGradient.cu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Functional\Elementary\Concatenate\Concatenate.cu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Functional\Elementary\Mask\Mask.cu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Functional\Elementary\SymmetricApplication\SymmetricApplication.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Functional\GPUCode\ElementFunctionGradient.cu">
+    <Content Include="Functional\Elementary\ElementFunction\ElementFunctionGradient.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\ElementFunction.cu">
+    <Content Include="Functional\Elementary\ElementFunction\ElementFunction.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\ElementFuntionsApply.h">
+    <Content Include="Functional\Elementary\Extend\Extend.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\Extend.cu">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Functional\GPUCode\GetVectors.cu">
+    <Content Include="Functional\Elementary\GetVectors\GetVectors.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Functional\GPUCode\GPU_Matrix.h">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\MatrixFunctionGradient.cu">
+    <Content Include="Functional\Elementary\MatrixFunction\MatrixFunctionGradient.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\MatrixFunction.cu">
+    <Content Include="Functional\Elementary\MatrixFunction\MatrixFunction.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Functional\GPUCode\MatrixFunctionsApply.h">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Functional\GPUCode\MatrixFunctionsApplyGradient.h">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Functional\GPUCode\MatrixMultipication.cu">
+    <Content Include="Functional\Elementary\MatrixMultiplication\MatrixMultiplication.cu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

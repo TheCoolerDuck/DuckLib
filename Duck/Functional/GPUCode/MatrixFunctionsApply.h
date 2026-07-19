@@ -10,7 +10,7 @@ __device__ float apply(float x, float y, int ID)
         case 1351319841: return x * y;
         case -1120375947: return powf(x, y);
         case 1054396597: return x - y;
-        case 1151562531: return x % y;
+        case 1151562531: return x - y * floorf(x / y);
         default: return 1.0f / 0.0f;
     }
 }

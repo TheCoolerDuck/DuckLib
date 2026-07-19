@@ -21,12 +21,12 @@ namespace Duck.Functional.Value.Double
 
         public static string GetGPUApply()
         {
-            return "x % y";
+            return "return x - y * floorf(x / y);";
         }
 
         public static string GetGPUApplyDerivative()
         {
-            return "make_float2(1, -floorf(x / y))";
+            return "return make_float2(1, -floorf(x / y));";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Duck.Functional.Elementary;
+﻿using Duck.Functional.Elementary.ElementFunction;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
 using System;
@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Duck.Modules.Basic
 {
-    public class Apply<T> : IModule where T : ISingleValueFunction
+    public class Apply<T>(Module? parent, string name = "Apply") : Module(parent, name) where T : ISingleValueFunction
     {
         private readonly ElementFunction<T> function = new();
-        public Matrix Forward(Matrix m)
+        public override Matrix Forward(Matrix m)
         {
             return function.Apply(m);
         }
 
-        public Matrix[] GetParameters()
+        public override Matrix[] GetParameters()
         {
             return [];
         }

@@ -20,12 +20,12 @@ namespace Duck.Functional.Value.Single
 
         public static string GetGPUApply()
         {
-            return "sqrtf(x)";
+            return "return sqrtf(x);";
         }
 
         public static string GetGPUApplyDerivative()
         {
-            return "1 / (2 * sqrtf(x))";
+            return "return 1.0f / (2.0f * sqrtf(x));";
         }
     }
 }

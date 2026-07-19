@@ -31,7 +31,7 @@ struct Matrix
 	__device__ int2 Quards(int i)
 	{
 		if (transposed)
-			return make_int2(i / width, i % width);
+			return make_int2(i / height, i % height);
 		else
 			return make_int2(i % width, i / width);
 	}

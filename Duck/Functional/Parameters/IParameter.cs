@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Duck.Functions.Parameters
+namespace Duck.Functional.Parameters
 {
     public interface IParameter
     {

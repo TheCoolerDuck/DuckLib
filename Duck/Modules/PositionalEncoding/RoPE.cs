@@ -1,4 +1,5 @@
 ﻿using Duck.Functional.Elementary;
+using Duck.Functional.Elementary.Concatenate;
 using Duck.Functional.Value.Double;
 using Duck.Functions.Value.Single;
 using System;
@@ -9,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace Duck.Modules.PositionalEncoding
 {
-    public class RoPE : IModule
+    public class RoPE : Module
     {
         private readonly Matrix[] matrices;
-        private readonly Concatenate concatenate = new(FunctionType.Column);
-        public RoPE(int size, int maxSequenceLength)
+        public RoPE(int size, int maxSequenceLength, Module? parent = null, string name = "RoPE") : base(parent, name)
         {
             matrices = new Matrix[maxSequenceLength];
 
@@ -26,7 +26,7 @@ namespace Duck.Modules.PositionalEncoding
                     int a = 2 * i;
                     int b = a + 1;
 
-                    float theta = m * MathF.Pow(1000f, -(2f * i) / size);
+                    float theta = m * MathF.Pow(100000f, -(2f * i) / size);
 
                     values[a, a] = MathF.Cos(theta);
                     values[a, b] = MathF.Sin(theta);
@@ -38,7 +38,7 @@ namespace Duck.Modules.PositionalEncoding
                 matrices[m] = new Matrix(values, new MatrixOptions() { HasGrad = false, Name = "RoPE " + m });
             }
         }
-        public Matrix Forward(Matrix m)
+        public override Matrix Forward(Matrix m)
         {
             Matrix[] output = new Matrix[m.shape.width];
 
@@ -47,10 +47,10 @@ namespace Duck.Modules.PositionalEncoding
                 output[p] = m.GetRow(p).T() >> matrices[p];
             }
 
-            return concatenate.Apply(output);
+            return new Concatenate(FunctionType.Column, m.shape.width).Apply(output);
         }
 
-        public Matrix[] GetParameters()
+        public override Matrix[] GetParameters()
         {
             return [];
         }

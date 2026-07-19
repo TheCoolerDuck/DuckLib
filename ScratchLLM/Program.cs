@@ -1,12 +1,11 @@
 ﻿
 using Duck;
-using Duck.Functional.Elementary;
-using Duck.Functions.Parameters;
+using Duck.Functional.Elementary.SymmetricApplication;
+using Duck.Functional.Loss.CrossEntropy;
 using Duck.Functions.Value.Double;
 using Duck.Functions.Value.Single;
 using Duck.Management;
 using Duck.Modules.Basic;
-using Duck.Modules.Loss;
 using Duck.Modules.PositionalEncoding;
 using Duck.Optimization;
 using Duck.Tokenization;
@@ -17,7 +16,7 @@ using System.Text;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-//DeviceManager.defaultDevice = Device.GPU;
+DeviceManager.defaultDevice = Device.GPU;
 
 //TestSuite.RunAllExpanded();
 
@@ -25,12 +24,12 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 Tokenizer tokenizer = new("C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Data\\TokenizationData4000.txt");
 
-SimpleLLMModel model = new(tokenizer);
+Model model = new(tokenCount: 4000, layers: 4, vectorDims: 64, key_queryDims: 16, forwardMLP_size: [64, 128], translationMLP_size: [64, 128]);
 
 int[] data = tokenizer.tokenize(File.ReadAllText("C:\\Users\\pjsol\\source\\repos\\DuckLib\\ScratchLLM\\Data\\RickAndMorty.txt"));
 
 Optimizer optimizer = new AdamW(model.GetParameters(), lr: 0.001f, weightDecay: 0.0001f);
-CrossEntropy loss = new();
+CrossEntropy loss = new(1024);
 
 Random random = new();
 
@@ -38,7 +37,7 @@ Stopwatch watch = Stopwatch.StartNew();
 
 const int sampleSize = 1027;
 
-for (int i = 0; i < 250; i++)
+for (int i = 0; i < 1_000; i++)
 {
     int j = random.Next(data.Length - sampleSize);
 

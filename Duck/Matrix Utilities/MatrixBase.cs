@@ -1,4 +1,4 @@
-﻿using Duck.Functions.Parameters;
+﻿
 using Duck.Management;
 using System;
 using System.Collections.Generic;
@@ -48,31 +48,8 @@ namespace Duck.Matrix_Utilities
                 gradientIsDirty = false;
             }
         }
-
-        public void Detach(MatrixBase? parent)
-        {
-            if (usages.Count <= 0 && parent != null)
-                return;
-
-            if (parent == null)
-                backwardContext = null;
-
-            if (usages.Count <= 1)
-            {
-
-                usages.Clear();
-
-                if (backwardContext != null)
-                {
-                    foreach (Matrix matrix in backwardContext.parameter.MatricesUsed())
-                        matrix.matrixBase.Detach(this);
-                }
-
-                return;
-            }
-
-            usages.RemoveAll(u => u.parameter.result!.matrixBase == parent);
-        }
+        public abstract MatrixBase Clone();
+        public abstract MatrixBase CloneValues();
         public abstract (int width, int height) GetShape();
         public abstract bool HasGradient();
         protected abstract void ZeroGradientValues();

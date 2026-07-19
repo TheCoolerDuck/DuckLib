@@ -1,5 +1,9 @@
 ﻿using Duck.Functional.Elementary;
-using Duck.Functions.Basic;
+using Duck.Functional.Elementary.Concatenate;
+using Duck.Functional.Elementary.MatrixFunction;
+using Duck.Functional.Elementary.Extend;
+using Duck.Functional.Elementary.MatrixMultiplication;
+using Duck.Functional.Elementary.GetVectors;
 using Duck.Functions.Value.Double;
 using Duck.Management;
 using Duck.Matrix_Utilities;
@@ -99,6 +103,10 @@ namespace Duck
                     ? new MatrixCPU(values, hasGrad, null, name)
                     : new MatrixGPU(values, null, hasGrad, name);
         }
+        internal Matrix(MatrixBase matrixBase)
+        {
+            this.matrixBase = matrixBase;
+        }
 
         private Matrix(Matrix m)
         {
@@ -181,8 +189,6 @@ namespace Duck
                 return t;
             }
         }
-
-        public void Detach() => matrixBase.Detach(null);
         public void Backwards() => matrixBase.Backwards();
         public void ZeroGradient() => matrixBase.ZeroGradient();
 
@@ -201,6 +207,9 @@ namespace Duck
         {
             return y * shape.width + x;
         }
+
+        public Matrix Clone() => new(matrixBase.Clone());
+        public Matrix CloneValues() => new(matrixBase.CloneValues());
 
         #endregion
 
@@ -287,8 +296,8 @@ namespace Duck
         public Matrix GetRows(int[] i) => new GetVectors(FunctionType.Row).Apply((this, i));
         public Matrix GetColumns(int[] i) => new GetVectors(FunctionType.Column).Apply((this, i));
 
-        public Matrix RowConcatenate(Matrix o) => new Concatenate(FunctionType.Row).Apply(new Matrix[] { this, o });
-        public Matrix ColumnConcatenate(Matrix o) => new Concatenate(FunctionType.Column).Apply(new Matrix[] { this, o });
+        public Matrix RowConcatenate(Matrix o) => new Concatenate(FunctionType.Row, 2).Apply(new Matrix[] { this, o });
+        public Matrix ColumnConcatenate(Matrix o) => new Concatenate(FunctionType.Column, 2).Apply(new Matrix[] { this, o });
 
         #endregion
 

@@ -25,7 +25,7 @@ namespace Duck.Matrix_Utilities
         public new readonly (int width, int height) shape;
         internal MatrixGPU(float[,] values, IBackwardContext? backwardContext = null, bool hasGradient = false, string name = "matrix") : base(backwardContext, name)
         {
-            GPUManager.Ready();
+            GPUManager.Innit();
             shape = (values.GetLength(0), values.GetLength(1));
             this.values = new CudaDeviceVariable<float>(shape.width * shape.height);
 
@@ -38,15 +38,40 @@ namespace Duck.Matrix_Utilities
             this.values.CopyToDevice(flat);
             gradient = hasGradient ? new CudaDeviceVariable<float>(shape.width * shape.height) : null;
         }
-        internal MatrixGPU((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext backwardContext, bool hasGradient = true) : base(backwardContext, "")
+        internal MatrixGPU((int width, int height) shape, CudaDeviceVariable<float> values, IBackwardContext? backwardContext, bool hasGradient = true) : base(backwardContext, "")
         {
-            GPUManager.Ready();
+            GPUManager.Innit();
             this.shape = shape;
             this.values = values;
             gradient = hasGradient ? new CudaDeviceVariable<float>(shape.width * shape.height) : null;
         }
+        public override MatrixBase Clone()
+        {
+            CudaDeviceVariable<float> newValues = new(shape.width * shape.height);
 
+            values.CopyToDevice(newValues);
 
+            return new MatrixGPU(
+                shape,
+                newValues,
+                null,
+                gradient != null
+            );
+        }
+
+        public override MatrixBase CloneValues()
+        {
+            CudaDeviceVariable<float> newValues = new(shape.width * shape.height);
+
+            values.CopyToDevice(newValues);
+
+            return new MatrixGPU(
+                shape,
+                newValues,
+                null,
+                false
+            );
+        }
         public override (int width, int height) GetShape()
         {
             return shape;

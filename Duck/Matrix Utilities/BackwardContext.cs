@@ -1,5 +1,5 @@
 ﻿using Duck.Functional.Elementary;
-using Duck.Functions.Parameters;
+using Duck.Functional.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +17,12 @@ namespace Duck.Matrix_Utilities
 
     internal class BackwardContext<T> : IBackwardContext where T : IParameter
     {
-        private readonly IBasicFunction<T>? function; // null signifys loss function was aplied
+        private readonly BasicFunction<T>? function; // null signifys loss function was aplied
         private readonly T parameters;
 
         public IParameter parameter => parameters;
 
-        public BackwardContext(IBasicFunction<T>? function, T parameters)
+        public BackwardContext(BasicFunction<T>? function, T parameters)
         {
             this.function = function;
             this.parameters = parameters;
@@ -33,8 +33,6 @@ namespace Duck.Matrix_Utilities
         }
         public void WalkBack()
         {
-
-
             function?.ApplyGradient(parameters);
 
             foreach (Matrix mat in parameters.MatricesUsed())

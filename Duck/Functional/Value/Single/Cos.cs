@@ -18,12 +18,12 @@ namespace Duck.Functions.Value.Single
         }
         public static string GetGPUApply()
         {
-            return "cosf(x)";
+            return "return cosf(x);";
         }
 
         public static string GetGPUApplyDerivative()
         {
-            return "-sinf(x)";
+            return "return -sinf(x);";
         }
     }
 }

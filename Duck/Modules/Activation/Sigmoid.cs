@@ -1,4 +1,4 @@
-﻿using Duck.Functional.Elementary;
+﻿using Duck.Functional.Elementary.ElementFunction;
 using Duck.Functions.Value.Single;
 using Duck.Modules;
 using System;
@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Duck.Modules.Activation
 {
-    public class Sigmoid : IModule
+    public class Sigmoid(Module? parent, string name = "Sigmoid") : Module(parent, name)
     {
         private static readonly ElementFunction<Exp> exp = new();
-        public Matrix Forward(Matrix m)
+        public override Matrix Forward(Matrix m)
         {
             return 1 / (1 + exp.Apply(-m));
         }
 
-        public Matrix[] GetParameters()
+        public override Matrix[] GetParameters()
         {
             return [];
         }

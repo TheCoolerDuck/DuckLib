@@ -1,10 +1,12 @@
-﻿using ManagedCuda;
+﻿using Duck.Functions.Value.Single;
+using ManagedCuda;
 using ManagedCuda.BasicTypes;
 using ManagedCuda.NVRTC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,23 +14,66 @@ namespace Duck.Management
 {
     internal static class GPUManager
     {
-        private static CudaContext? _context;
+        private static CudaContext? context;
         public const int threads = 2048;
-        public static CudaContext Context
+        public const int normalBlockSize = 256;
+        public const int largeBlockSize = 1024;
+        public static bool live => context != null;
+        public static void Innit()
         {
-            get
+            if (context == null)
             {
-                _context ??= new CudaContext(0);
-                return _context;
+                context = new CudaContext(0);
             }
         }
 
-        public static void Ready()
+        public static void SetKernelSize(CudaKernel kernel, int threads)
         {
-            _context ??= new CudaContext(0);
+            kernel.BlockDimensions = normalBlockSize;
+            kernel.GridDimensions = (threads + normalBlockSize - 1) / normalBlockSize;
         }
 
-        public static CudaKernel Compile(string source)
+        public static CudaKernel Compile([CallerFilePath] string file = "")
+        {
+            if (!live)
+                Innit();
+
+            string source = File.ReadAllText(file[..^3] + ".cu");
+
+            return _Compile(source);
+        }
+
+        public static CudaKernel CompileGradient([CallerFilePath] string file = "")
+        {
+            if (!live)
+                Innit();
+
+            string source = File.ReadAllText(file[..^3] + "Gradient.cu");
+
+            return _Compile(source);
+        }
+
+        public static CudaKernel Compile(string parameters, string returnType, string defaultCode, Type functionType, [CallerFilePath] string file = "")
+        {
+            if (!live)
+                Innit();
+
+            string source = FunctionImport(parameters, returnType, defaultCode, functionType, false) + File.ReadAllText(file[..^3] + ".cu");
+
+            return _Compile(source);
+        }
+
+        public static CudaKernel CompileGradient(string parameters, string returnType, string defaultCode, Type functionType, [CallerFilePath] string file = "")
+        {
+            if (!live)
+                Innit();
+
+            string source = FunctionImport(parameters, returnType, defaultCode, functionType, true) + File.ReadAllText(file[..^3] + "Gradient.cu");
+
+            return _Compile(source);
+        }
+
+        private static CudaKernel _Compile(string source)
         {
             CudaRuntimeCompiler rtc = new(source, "Main");
             try
@@ -41,7 +86,35 @@ namespace Duck.Management
             }
             byte[] ptx = rtc.GetPTX();
             rtc.Dispose();
-            return Context.LoadKernelPTX(ptx, "Main");
+            return context!.LoadKernelPTX(ptx, "Main");
+        }
+
+        private static string FunctionImport(string parameters, string returnType, string defaultCode, Type functionType, bool darivative)
+        {
+            StringBuilder sb = new();
+
+            sb.AppendLine($@"
+__device__ {returnType} apply({parameters}, int ID)
+{{
+    switch(ID)
+    {{");
+            List<Type> types = [.. GetAllTypesThatImplementInterface(functionType)];
+
+            foreach (Type t in types)
+            {
+                string code = (string)t
+                    .GetMethod(darivative ? "GetGPUApplyDerivative" : "GetGPUApply")!
+                    .Invoke(null, null)!;
+
+                sb.AppendLine($"        case {StableHash(t.Name)}: {code}");
+            }
+
+            sb.Append($@"        default: return {defaultCode};
+    }}
+}}
+
+");
+            return sb.ToString();
         }
 
         public static IEnumerable<Type> GetAllTypesThatImplementInterface(Type iface)
@@ -76,8 +149,8 @@ namespace Duck.Management
 
         public static void Dispose()
         {
-            _context?.Dispose();
-            _context = null;
+            context?.Dispose();
+            context = null;
         }
     }
 }

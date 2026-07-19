@@ -8,16 +8,22 @@ using System.Threading.Tasks;
 
 namespace Duck.Modules.Normalization
 {
-    public class LinearTanh(int vectorSize) : IModule
+    public class LinearTanh : Module
     {
-        private Linear l = new(vectorSize, vectorSize, "norm linear");
-        private Apply<TanH> tanh = new();
-        public Matrix Forward(Matrix m)
+        private readonly Linear l;
+        private readonly Apply<TanH> tanh;
+
+        public LinearTanh(int vectorSize, Module? parent, string name = "LinearTanhNorm") : base(parent, name)
+        {
+            l = new(vectorSize, vectorSize, this);
+            tanh = new(this);
+        }
+        public override Matrix Forward(Matrix m)
         {
             return tanh.Forward(l.Forward(m));
         }
 
-        public Matrix[] GetParameters()
+        public override Matrix[] GetParameters()
         {
             return [..l.GetParameters()];
         }

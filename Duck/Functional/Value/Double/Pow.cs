@@ -19,7 +19,7 @@ namespace Duck.Functions.Value.Double
         }
         public static string GetGPUApply()
         {
-            return "powf(x, y)";
+            return "return powf(x, y);";
         }
 
         public static string GetGPUApplyDerivative()
@@ -28,7 +28,7 @@ namespace Duck.Functions.Value.Double
             {
                 float p = powf(x, y);
                 return make_float2(y * p / x, p * logf(x));
-            }";
+            };";
         }
     }
 }

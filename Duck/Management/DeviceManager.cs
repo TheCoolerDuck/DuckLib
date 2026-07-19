@@ -15,5 +15,10 @@ namespace Duck.Management
     public static class DeviceManager
     {
         public static Device defaultDevice = Device.CPU;
+
+        public static void InnitGPU()
+        {
+            GPUManager.Innit();
+        }
     }
 }

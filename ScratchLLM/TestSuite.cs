@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using Duck;
-using Duck.Functions.Basic;
 using Duck.Functions.Value.Double;
 using Duck.Functions.Value.Single;
 using Duck.Modules.Basic;
 using Duck.Modules.Activation;
-using Duck.Modules.Loss;
 using Duck.Modules.Normalization;
 using Duck.Functional.Elementary;
+using Duck.Functional.Elementary.Concatenate;
+using Duck.Functional.Elementary.MatrixFunction;
+using Duck.Functional.Elementary.Extend;
+using Duck.Functional.Elementary.MatrixMultiplication;
+using Duck.Functional.Elementary.SymmetricApplication;
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Duck — Comprehensive Test Suite
@@ -523,31 +526,31 @@ public static partial class TestSuite
     static void TestElementwiseSinCommuteT()
     {
         Matrix a = M(new float[,] { { 0f, MathF.PI / 2 }, { MathF.PI, 3 * MathF.PI / 2 } });
-        AssertEqual(new Apply<Sin>().Forward(a).T(), new Apply<Sin>().Forward(a.T()), 1e-3f);
+        AssertEqual(new Apply<Sin>(null).Forward(a).T(), new Apply<Sin>(null).Forward(a.T()), 1e-3f);
     }
 
     static void TestElementwiseCosCommuteT()
     {
         Matrix a = M(new float[,] { { 0f, MathF.PI }, { MathF.PI / 2, 3 * MathF.PI / 2 } });
-        AssertEqual(new Apply<Cos>().Forward(a).T(), new Apply<Cos>().Forward(a.T()), 1e-3f);
+        AssertEqual(new Apply<Cos>(null).Forward(a).T(), new Apply<Cos>(null).Forward(a.T()), 1e-3f);
     }
 
     static void TestElementwiseExpCommuteT()
     {
         Matrix a = M(new float[,] { { 0, 1 }, { 2, 3 } });
-        AssertEqual(new Apply<Exp>().Forward(a).T(), new Apply<Exp>().Forward(a.T()), 1e-3f);
+        AssertEqual(new Apply<Exp>(null).Forward(a).T(), new Apply<Exp>(null).Forward(a.T()), 1e-3f);
     }
 
     static void TestElementwiseAbsCommuteT()
     {
         Matrix a = M(new float[,] { { -1, 2 }, { -3, 4 } });
-        AssertEqual(new Apply<Abs>().Forward(a).T(), new Apply<Abs>().Forward(a.T()));
+        AssertEqual(new Apply<Abs>(null).Forward(a).T(), new Apply<Abs>(null).Forward(a.T()));
     }
 
     static void TestElementwiseTanhCommuteT()
     {
         Matrix a = M(new float[,] { { -1, 0 }, { 1, 2 } });
-        AssertEqual(new Apply<TanH>().Forward(a).T(), new Apply<TanH>().Forward(a.T()), 1e-4f);
+        AssertEqual(new Apply<TanH>(null).Forward(a).T(), new Apply<TanH>(null).Forward(a.T()), 1e-4f);
     }
 
     static void TestMatMulATA()
@@ -576,54 +579,54 @@ public static partial class TestSuite
     static void TestSin()
     {
         Matrix a = M(new float[,] { { 0, MathF.PI / 2 } });
-        AssertEqual(new Apply<Sin>().Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
+        AssertEqual(new Apply<Sin>(null).Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
     }
 
     static void TestCos()
     {
         Matrix a = M(new float[,] { { 0, MathF.PI } });
-        AssertEqual(new Apply<Cos>().Forward(a), M(new float[,] { { 1, -1 } }), 1e-3f);
+        AssertEqual(new Apply<Cos>(null).Forward(a), M(new float[,] { { 1, -1 } }), 1e-3f);
     }
 
     static void TestExp()
     {
         Matrix a = M(new float[,] { { 0, 1 } });
-        AssertEqual(new Apply<Exp>().Forward(a), M(new float[,] { { 1, MathF.E } }), 1e-3f);
+        AssertEqual(new Apply<Exp>(null).Forward(a), M(new float[,] { { 1, MathF.E } }), 1e-3f);
     }
 
     static void TestLog()
     {
         Matrix a = M(new float[,] { { 1, MathF.E } });
-        AssertEqual(new Apply<Log>().Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
+        AssertEqual(new Apply<Log>(null).Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
     }
 
     static void TestAbsPositive()
     {
         Matrix a = M(new float[,] { { 1, 2, 3 } });
-        AssertEqual(new Apply<Abs>().Forward(a), a);
+        AssertEqual(new Apply<Abs>(null).Forward(a), a);
     }
 
     static void TestAbsNegative()
     {
         Matrix a = M(new float[,] { { -1, -2, -3 } });
-        AssertEqual(new Apply<Abs>().Forward(a), M(new float[,] { { 1, 2, 3 } }));
+        AssertEqual(new Apply<Abs>(null).Forward(a), M(new float[,] { { 1, 2, 3 } }));
     }
 
     static void TestAbsZero()
     {
-        AssertEqual(new Apply<Abs>().Forward(Scalar(0)), Scalar(0));
+        AssertEqual(new Apply<Abs>(null).Forward(Scalar(0)), Scalar(0));
     }
 
     static void TestTan()
     {
         Matrix a = M(new float[,] { { 0, MathF.PI / 4 } });
-        AssertEqual(new Apply<Tan>().Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
+        AssertEqual(new Apply<Tan>(null).Forward(a), M(new float[,] { { 0, 1 } }), 1e-3f);
     }
 
     static void TestTanh()
     {
         Matrix a = M(new float[,] { { 0, 10f } });
-        Matrix r = new Apply<TanH>().Forward(a);
+        Matrix r = new Apply<TanH>(null).Forward(a);
         AssertTrue(MathF.Abs(Val(r, 0, 0)) < 1e-4f, "tanh(0) should be 0");
         AssertTrue(MathF.Abs(Val(r, 1, 0) - 1f) < 1e-3f, "tanh(10) should be ≈1");
     }
@@ -631,21 +634,21 @@ public static partial class TestSuite
     static void TestElementwiseShapePreservation()
     {
         Matrix a = M(new float[,] { { 1, 2 }, { 3, 4 } });
-        Matrix b = new Apply<Sin>().Forward(a);
+        Matrix b = new Apply<Sin>(null).Forward(a);
         AssertShape(b, a.shape.height, a.shape.width);
     }
 
     static void TestSinZeroMatrix()
     {
         Matrix a = M(new float[,] { { 0, 0 }, { 0, 0 } });
-        AssertEqual(new Apply<Sin>().Forward(a), a);
+        AssertEqual(new Apply<Sin>(null).Forward(a), a);
     }
 
     static void TestExpLogRoundTrip()
     {
         // log(exp(x)) ≈ x  for reasonable x
         Matrix a = M(new float[,] { { 1, 2, 3 } });
-        Matrix r = new Apply<Log>().Forward(new Apply<Exp>().Forward(a));
+        Matrix r = new Apply<Log>(null).Forward(new Apply<Exp>(null).Forward(a));
         AssertEqual(r, a, 1e-3f);
     }
 
@@ -653,15 +656,15 @@ public static partial class TestSuite
     {
         // ||-x|| == |x|
         Matrix a = M(new float[,] { { -5, 3 } });
-        Matrix r1 = new Apply<Abs>().Forward(a);
-        Matrix r2 = new Apply<Abs>().Forward(r1);
+        Matrix r1 = new Apply<Abs>(null).Forward(a);
+        Matrix r2 = new Apply<Abs>(null).Forward(r1);
         AssertEqual(r1, r2);
     }
 
     static void TestCosOnTransposed()
     {
         Matrix a = M(new float[,] { { 0, MathF.PI }, { MathF.PI / 2, 0 } });
-        AssertEqual(new Apply<Cos>().Forward(a.T()), new Apply<Cos>().Forward(a).T(), 1e-3f);
+        AssertEqual(new Apply<Cos>(null).Forward(a.T()), new Apply<Cos>(null).Forward(a).T(), 1e-3f);
     }
 
     // =========================================================================
@@ -1014,7 +1017,7 @@ public static partial class TestSuite
     {
         Matrix a = M(new float[,] { { 1, 2 }, { 3, 4 } });
         Matrix b = M(new float[,] { { 5, 6 }, { 7, 8 } });
-        Matrix r = new Concatenate(FunctionType.Row).Apply(new Matrix[] { a, b });
+        Matrix r = new Concatenate(FunctionType.Row, 2).Apply(new Matrix[] { a, b });
         Matrix e = M(new float[,] { { 1, 2, 5, 6 }, { 3, 4, 7, 8 } });
         AssertEqual(r, e);
     }
@@ -1023,7 +1026,7 @@ public static partial class TestSuite
     {
         Matrix a = M(new float[,] { { 1, 2 } });
         Matrix b = M(new float[,] { { 3, 4 } });
-        Matrix r = new Concatenate(FunctionType.Column).Apply(new Matrix[] { a, b });
+        Matrix r = new Concatenate(FunctionType.Column, 2).Apply(new Matrix[] { a, b });
         Matrix e = M(new float[,] { { 1, 2 }, { 3, 4 } });
         AssertEqual(r, e);
     }
@@ -1032,7 +1035,7 @@ public static partial class TestSuite
     {
         Matrix a = M(new float[,] { { 1, 2, 3 } });
         Matrix b = M(new float[,] { { 4, 5, 6 } });
-        Matrix r = new Concatenate(FunctionType.Column).Apply(new Matrix[] { a, b });
+        Matrix r = new Concatenate(FunctionType.Column, 2).Apply(new Matrix[] { a, b });
         AssertShape(r, 2, 3);
     }
 
@@ -1040,7 +1043,7 @@ public static partial class TestSuite
     {
         Matrix a = M(new float[,] { { 1, 2 } });
         Matrix b = M(new float[,] { { 3, 4 } });
-        Matrix r = new Concatenate(FunctionType.Column).Apply(new Matrix[] { a, b }).T();
+        Matrix r = new Concatenate(FunctionType.Column, 2).Apply(new Matrix[] { a, b }).T();
         AssertShape(r, 2, 2);
     }
 
@@ -1178,37 +1181,37 @@ public static partial class TestSuite
     static void TestApplySin()
     {
         Matrix a = M(new float[,] { { MathF.PI / 2 } });
-        AssertEqual(new Apply<Sin>().Forward(a), Scalar(1), 1e-3f);
+        AssertEqual(new Apply<Sin>(null).Forward(a), Scalar(1), 1e-3f);
     }
 
     static void TestApplyCos()
     {
-        AssertEqual(new Apply<Cos>().Forward(Scalar(0)), Scalar(1), 1e-3f);
+        AssertEqual(new Apply<Cos>(null).Forward(Scalar(0)), Scalar(1), 1e-3f);
     }
 
     static void TestApplyExp()
     {
-        AssertEqual(new Apply<Exp>().Forward(Scalar(0)), Scalar(1), 1e-3f);
+        AssertEqual(new Apply<Exp>(null).Forward(Scalar(0)), Scalar(1), 1e-3f);
     }
 
     static void TestApplyLog()
     {
-        AssertEqual(new Apply<Log>().Forward(Scalar(MathF.E)), Scalar(1), 1e-3f);
+        AssertEqual(new Apply<Log>(null).Forward(Scalar(MathF.E)), Scalar(1), 1e-3f);
     }
 
     static void TestApplyAbs()
     {
-        AssertEqual(new Apply<Abs>().Forward(Scalar(-7)), Scalar(7));
+        AssertEqual(new Apply<Abs>(null).Forward(Scalar(-7)), Scalar(7));
     }
 
     static void TestApplyTanh()
     {
-        AssertEqual(new Apply<TanH>().Forward(Scalar(0)), Scalar(0), 1e-4f);
+        AssertEqual(new Apply<TanH>(null).Forward(Scalar(0)), Scalar(0), 1e-4f);
     }
 
     static void TestApplyTan()
     {
-        AssertEqual(new Apply<Tan>().Forward(Scalar(0)), Scalar(0), 1e-4f);
+        AssertEqual(new Apply<Tan>(null).Forward(Scalar(0)), Scalar(0), 1e-4f);
     }
 
     // =========================================================================
@@ -1218,7 +1221,7 @@ public static partial class TestSuite
     static void TestSoftMaxSumsToOne()
     {
         Matrix a = M(new float[,] { { 1, 2, 3, 4 } });
-        Matrix r = new SoftMax().Forward(a);
+        Matrix r = new SoftMax(null).Forward(a);
         float sum = 0;
         for (int x = 0; x < r.shape.width; x++)
             for (int y = 0; y < r.shape.height; y++)
@@ -1230,7 +1233,7 @@ public static partial class TestSuite
     {
         // Equal inputs → equal outputs → each = 1/n
         Matrix a = M(new float[,] { { 1, 1, 1, 1 } });
-        Matrix r = new SoftMax().Forward(a);
+        Matrix r = new SoftMax(null).Forward(a);
         float expected = 0.25f;
         for (int x = 0; x < r.shape.width; x++)
             for (int y = 0; y < r.shape.height; y++)
@@ -1241,7 +1244,7 @@ public static partial class TestSuite
     static void TestSoftMaxRange()
     {
         Matrix a = M(new float[,] { { -10, 0, 5, 100 } });
-        Matrix r = new SoftMax().Forward(a);
+        Matrix r = new SoftMax(null).Forward(a);
         for (int x = 0; x < r.shape.width; x++)
             for (int y = 0; y < r.shape.height; y++)
             {
@@ -1254,7 +1257,7 @@ public static partial class TestSuite
     {
         // Very large last element → its softmax ≈ 1
         Matrix a = M(new float[,] { { 0, 0, 100 } });
-        Matrix r = new SoftMax().Forward(a);
+        Matrix r = new SoftMax(null).Forward(a);
         float last = 0;
         // Last valid column index depends on layout; find max
         for (int x = 0; x < r.shape.width; x++)
@@ -1269,26 +1272,26 @@ public static partial class TestSuite
 
     static void TestSigmoidAtZero()
     {
-        Matrix r = new Sigmoid().Forward(Scalar(0));
+        Matrix r = new Sigmoid(null).Forward(Scalar(0));
         AssertTrue(MathF.Abs(r.values[0, 0] - 0.5f) < 1e-4f, $"Sigmoid(0)={r.values[0, 0]}, expected 0.5");
     }
 
     static void TestSigmoidLarge()
     {
-        Matrix r = new Sigmoid().Forward(Scalar(100f));
+        Matrix r = new Sigmoid(null).Forward(Scalar(100f));
         AssertTrue(r.values[0, 0] > 0.99f, $"Sigmoid(100)={r.values[0, 0]}, expected ≈1");
     }
 
     static void TestSigmoidNegative()
     {
-        Matrix r = new Sigmoid().Forward(Scalar(-100f));
+        Matrix r = new Sigmoid(null).Forward(Scalar(-100f));
         AssertTrue(r.values[0, 0] < 0.01f, $"Sigmoid(-100)={r.values[0, 0]}, expected ≈0");
     }
 
     static void TestSwishAtZero()
     {
         // Swish(x) = x * sigmoid(x), so Swish(0) = 0
-        Matrix r = new Swish().Forward(Scalar(0));
+        Matrix r = new Swish(null).Forward(Scalar(0));
         AssertTrue(MathF.Abs(r.values[0, 0]) < 1e-4f, $"Swish(0)={r.values[0, 0]}, expected 0");
     }
 
@@ -1299,7 +1302,7 @@ public static partial class TestSuite
     static void TestAllZeros()
     {
         Matrix z = M(new float[,] { { 0, 0 }, { 0, 0 } });
-        AssertEqual(new Apply<Sin>().Forward(z), z);
+        AssertEqual(new Apply<Sin>(null).Forward(z), z);
         AssertEqual(z + z, z);
         AssertEqual(z >> z, z);
     }
@@ -1332,7 +1335,7 @@ public static partial class TestSuite
     static void TestLargeValuesAbs()
     {
         Matrix a = M(new float[,] { { 1e6f, -1e6f } });
-        AssertEqual(new Apply<Abs>().Forward(a), M(new float[,] { { 1e6f, 1e6f } }));
+        AssertEqual(new Apply<Abs>(null).Forward(a), M(new float[,] { { 1e6f, 1e6f } }));
     }
 
     static void TestLargeMatMul()

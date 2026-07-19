@@ -14,6 +14,8 @@ namespace Duck.Matrix_Utilities
         public new readonly (int width, int height) shape;
         internal MatrixCPU(float[,] values, bool hasGradient, IBackwardContext? backwardContext = null, string name = "") : base(backwardContext, name)
         {
+            if (values.Cast<float>().Any(v => float.IsNaN(v)))
+                throw new ArgumentException();
             this.values = values;
             gradient = hasGradient ? new float[values.GetLength(0), values.GetLength(1)] : null;
             shape = (values.GetLength(0), values.GetLength(1));
@@ -33,6 +35,14 @@ namespace Duck.Matrix_Utilities
         public override bool HasGradient()
         {
             return gradient != null;
+        }
+        public override MatrixBase Clone()
+        {
+            return new MatrixCPU((float[,])values.Clone(), gradient != null, name: name + "_Clone");
+        }
+        public override MatrixBase CloneValues()
+        {
+            return new MatrixCPU((float[,])values.Clone(), false, name: name + "_ValueClone");
         }
 
         #region Gets and Sets
@@ -90,6 +100,7 @@ namespace Duck.Matrix_Utilities
             Array.Copy(gradient, output, gradient.Length);
             return output;
         }
+
         #endregion
     }
 

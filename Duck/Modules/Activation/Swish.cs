@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace Duck.Modules.Activation
 {
-    public class Swish : IModule
+    public class Swish : Module
     {
-        private static readonly Sigmoid sigmoid = new();
-        public Matrix Forward(Matrix m)
+        private readonly Sigmoid sigmoid;
+        public Swish(Module? parent, string name = "Swish") : base(parent, name)
+        {
+            sigmoid = new(this);
+        }
+        public override Matrix Forward(Matrix m)
         {
             return sigmoid.Forward(m) * m;
         }
 
-        public Matrix[] GetParameters()
+        public override Matrix[] GetParameters()
         {
             return [];
         }
